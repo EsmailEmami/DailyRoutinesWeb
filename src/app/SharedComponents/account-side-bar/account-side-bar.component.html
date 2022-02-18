@@ -1,0 +1,44 @@
+<!-- data-aos="fade-left" -->
+
+
+<div class="right-menu">
+  <div class="logo"><a href="#"> logo </a></div>
+  <ul>
+    <li [routerLink]="['/Account/Dashboard']" routerLinkActive="active">
+      <a>
+        <i class="far fa-home"></i> <span>اطلاعات کاربری</span>
+      </a>
+    </li>
+    <li [routerLink]="['/Account/Categories']" routerLinkActive="active">
+      <a>
+        <i class="fas fa-inventory"></i> <span>دسته بندی</span>
+      </a>
+    </li>
+    <li [routerLink]="['/Account/Actions']" routerLinkActive="active">
+      <a>
+        <i class="fas fa-inventory"></i> <span>فعالیت ها</span>
+      </a>
+    </li>
+
+    <li class="dropdown" [routerLinkActive]="['show']">
+      <span class="name">
+        <i class="far fa-user"></i> <span>کاربر</span>
+      </span>
+      <ul>
+        <li>
+          <a [routerLink]="['/Manager/Users']"><i class="far fa-user"></i> کاربران</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown" [routerLinkActive]="['show']">
+      <span class="name">
+        <i class="far fa-lock-alt"></i> <span>دسترسی</span>
+      </span>
+      <ul>
+        <li>
+          <a [routerLink]="['/Manager/Roles']"><i class="far fa-shield-check"></i> مقام</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,155 @@
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+  <div *ngIf="category != null">
+    <div class="box-data" data-aos="zoom-in">
+      <div class="data-header">
+        <h2 class="info">اطلاعات کلی</h2>
+
+        <div>
+          <button class="site-btn danger" [swal]="deleteSwal">حذف</button>
+          <button class="site-btn warning" (click)="editCategory()">ویرایش</button>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2">
+        <div class="col">
+          <div class="item">
+            <label>نام دسته بندی:</label>
+            <span>{{ category.categoryTitle }}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item">
+            <label>اخرین بروز رسانی:</label>
+            <span>{{ category.lastUpdate }}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item">
+            <label>فعالیت های ثبت شده:</label>
+            <span>{{ category.actionsCount }} عدد</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="lastActions != null">
+    <div class="box-data" data-aos="zoom-in">
+      <div class="data-header">
+        <h2 class="info">اخرین فعالیت ها</h2>
+
+        <div>
+          <button class="site-btn info" [routerLink]="['/Account/CategoryActions',category.categoryId,
+          category.categoryTitle.replace(' ','-')]">
+            مشاهده بیشتر
+          </button>
+          <button
+            class="site-btn success"
+            (click)="newAction()"
+          >
+            فعالیت جدید
+          </button>
+        </div>
+      </div>
+      <div class="d-block">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">زمان ساخت</th>
+            <th scope="col">دستورات</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of lastActions.items; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.actionTitle }}</td>
+            <td>{{ item.createDate }}</td>
+            <td>
+              <button
+                class="site-btn info"
+                (click)="openActionDetailModal(item.actionId)">
+                جزئیات
+              </button>
+              <button
+                class="site-btn warning"
+                (click)="editAction(item.actionId)">
+                ویرایش
+              </button>
+              <button
+                class="site-btn danger"
+                (click)="deleteAction(item.actionId, item.actionTitle)">
+                حذف
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="months != null">
+    <div class="box-data"
+         *ngFor="let year of months">
+      <div class="data-header">
+        <h2 class="info">فعالیت های سال {{year.year}}</h2>
+
+        <button class="site-btn info" [routerLink]="['/Account/CategoryActions',category.categoryId,
+          category.categoryTitle.replace(' ','-')]"
+                [queryParams]="{year: year.year}">
+          مشاهده بیشتر
+        </button>
+      </div>
+
+      <div class="d-block">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">عنوان</th>
+            <th scope="col">فعالیت های ثبت شده</th>
+            <th scope="col">دستورات</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let month of year.months">
+            <td>{{month.title}}</td>
+            <td>{{month.actionsCount}}</td>
+            <td>
+              <button
+                class="site-btn success"
+                [routerLink]="['/Account/CategoryActions',category.categoryId,
+                    category.categoryTitle.replace(' ','-')]"
+                [queryParams]="{year: year.year,month: month.month}">
+                مشاهده
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>
+
+<swal
+  #deleteSwal
+  text="آیا از حذف دسته بندی {{category.categoryTitle}} اطمینان دارید؟"
+  icon="warning"
+  [showCancelButton]="true"
+  (confirm)="removeCategory()"
+  [customClass]="{
+   confirmButton: 'site-btn success modal-btn',
+    cancelButton: 'site-btn danger modal-btn'
+  }"
+  [buttonsStyling]="false"
+  confirmButtonText="حذف"
+  cancelButtonText="لغو"
+  [reverseButtons]="true">
+</swal>

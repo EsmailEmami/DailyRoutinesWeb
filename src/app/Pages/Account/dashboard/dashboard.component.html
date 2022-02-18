@@ -1,0 +1,82 @@
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+
+  <div *ngIf="user != null">
+
+
+    <div class="text-center" data-aos="flip-left">
+      <h1 class="title">{{user.firstName}}  {{user.lastName}} خوش آمدید!</h1>
+    </div>
+
+    <div class="box-data" data-aos="zoom-in">
+      <div class="data-header">
+        <h2 class="info">اطلاعات کاربری</h2>
+
+        <div>
+          <button class="site-btn warning">
+            ویرایش
+          </button>
+
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2">
+        <div class="col">
+          <div class="item">
+            <label>نام و خانوادگی:</label>
+            <span>{{user.firstName}}  {{user.lastName}}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item">
+            <label>شماره تلفن:</label>
+            <span>{{user.phoneNumber}}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="item">
+            <label>ایمیل:</label>
+            <span>{{user.email}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-data" data-aos="zoom-in">
+      <div class="data-header">
+        <h2 class="info">آخرین دسته بندی های بروز شده</h2>
+      </div>
+
+      <div class="d-block">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">آخرین بروز رسانی</th>
+            <th scope="col">دستورات</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of lastChangedCategories.items; let i = index">
+            <th scope="row">{{ i + 1}}</th>
+            <td>{{item.categoryTitle}}</td>
+            <td>{{item.lastUpdateDate}}</td>
+            <td>
+              <button class="table-btn color-info"
+                      [routerLink]="['/Account/Categories',item.categoryId]">باز کردن
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>

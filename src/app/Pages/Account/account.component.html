@@ -1,0 +1,28 @@
+<app-account-side-bar></app-account-side-bar>
+
+<div class="content-page">
+  <!-- ======= Header ======= -->
+
+  <!-- data-aos="fade-down" -->
+
+  <div class="content-header" >
+    <button type="button" id="menu_button">
+      <i class="far fa-bars"></i>
+    </button>
+    <div class="user-img">
+      <a href="/Account/Dashboard">
+        <img src="/images/UserImages/userAvatar.jpg" alt="کاربر پیش فرض" />
+        <span>کاربر پیش فرض</span>
+      </a>
+    </div>
+    <div class="back-button" [routerLink]="['']">
+      <i class="far fa-arrow-left"></i>
+    </div>
+  </div>
+
+  <!-- End Header -->
+
+  <router-outlet></router-outlet>
+
+</div>
+

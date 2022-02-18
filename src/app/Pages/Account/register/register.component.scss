@@ -1,0 +1,116 @@
+.login-page {
+  padding: 80px 0;
+  position: relative;
+  background: url('../../../../assets/img/pattern.png') repeat #fff;
+
+  .inner {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+
+    &::before {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: #fff;
+      z-index: 1;
+      border-radius: 15px;
+      -moz-border-radius: 15px;
+      -webkit-border-radius: 15px;
+      box-shadow: 0 0 15px #d7dee9;
+      left: -5px;
+      top: -10px;
+      transform: rotate(-8deg);
+      -moz-transform: rotate(-8deg);
+      -webkit-transform: rotate(-8deg);
+      content: ''
+    }
+
+    .inner-data {
+      width: 100%;
+      position: relative;
+      background-color: #fff;
+      border-radius: 15px;
+      -moz-border-radius: 15px;
+      -webkit-border-radius: 15px;
+      box-shadow: 0 0 15px #d7dee9;
+      -moz-box-shadow: 0 0 15px #d7dee9;
+      -webkit-box-shadow: 0 0 15px #d7dee9;
+      padding: 25px 35px 10px 35px;
+      z-index: 2;
+
+
+      .login-logo {
+        width: 100%;
+        text-align: center;
+
+        a {
+          font-size: 32px;
+          font-weight: 300;
+          color: var(--color-secondary);
+          font-family: var(--font-default);
+          margin: 0;
+        }
+      }
+
+      .login-title {
+        position: relative;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 30px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 5px;
+          right: -36px;
+          border-width: 12px;
+          border-style: solid;
+          border-color: transparent var(--color-primary) transparent transparent;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+
+      form {
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+
+      .login-options {
+        margin-top: 1.5rem;
+        border-top: 1px solid #ced4da;
+        padding-top: 1rem;
+
+        div {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+        }
+
+        i {
+          font-size: 20px;
+          margin-left: 10px;
+          color: var(--color-primary);
+          margin-top: 5px;
+        }
+
+        a,
+        p {
+          margin: 0;
+        }
+
+        p{
+          margin-left: 10px;
+        }
+
+        a{
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

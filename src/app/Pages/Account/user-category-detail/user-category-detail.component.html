@@ -1,0 +1,49 @@
+<div class="box-data" *ngIf="category != null">
+  <div class="data-header">
+    <h2 class="info">دسته بندی {{category.categoryTitle}}</h2>
+
+    <div>
+      <button class="site-btn danger" [swal]="deleteSwal">حذف</button>
+      <button class="site-btn warning" (click)="hide()">پنهان</button>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2">
+    <div class="col">
+      <div class="item">
+        <label>نام دسته بندی:</label>
+        <span>{{category.categoryTitle}}</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="item">
+        <label>اخرین بروز رسانی:</label>
+        <span>{{category.lastUpdate}}</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="item">
+        <label>فعالیت های ثبت شده:</label>
+        <span>{{category.actionsCount}} عدد</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>
+
+<swal
+  #deleteSwal
+  text="آیا از حذف دسته بندی {{category.categoryTitle}} اطمینان دارید؟"
+  icon="warning"
+  [showCancelButton]="true"
+  (confirm)="removeCategory()"
+  [customClass]="{
+   confirmButton: 'site-btn success modal-btn',
+    cancelButton: 'site-btn danger modal-btn'
+  }"
+  [buttonsStyling]="false"
+  confirmButtonText="حذف"
+  cancelButtonText="لغو"
+  [reverseButtons]="true">
+</swal>

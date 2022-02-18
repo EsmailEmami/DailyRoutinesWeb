@@ -1,0 +1,92 @@
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+
+  <div *ngIf="categories == null" class="text-center">
+    Categories NotFound
+  </div>
+
+  <div class="text-center" data-aos="flip-left">
+    <h1 class="title">دسته بندی های شما</h1>
+  </div>
+
+  <div class="box-data" data-aos="zoom-in">
+    <div class="data-header">
+      <h2 class="info">دسته بندی ها</h2>
+
+      <div>
+        <button class="site-btn success" (click)="openNewCategoryModal()">دسته بندی جدید</button>
+        <button class="site-btn warning" (click)="showFilterItems()">فیلتر</button>
+      </div>
+    </div>
+
+    <div class="data-filter row" *ngIf="showFilter">
+      <div class="col-xs-12 col-sm-8 mb-2">
+        <div class="input">
+          <input type="text" placeholder="دنبال چی میگردی..." [(ngModel)]="categories.search"
+                 (keyup.enter)="updateCategories()">
+          <button type="button" (click)="updateCategories()"><i class="far fa-search"></i></button>
+        </div>
+      </div>
+      <div class="select-box col-xs-12 col-sm-4">
+        <select [(ngModel)]="categories.orderBy" (change)="updateCategories()">
+          <option value="CreateDate">تاریخ ثبت</option>
+          <option value="UpdateDate">آخرین ویرایش</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-block">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">عنوان</th>
+          <th scope="col">آخرین بروز رسانی</th>
+          <th scope="col">دستورات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of categories.items; let i = index">
+          <th scope="row">{{ i + 1}}</th>
+          <td>{{item.categoryTitle}}</td>
+          <td>{{item.lastUpdateDate}}</td>
+          <td>
+            <button class="site-btn info" (click)="ShowCategoryDetail(item.categoryId)">جزئیات
+            </button>
+            <button class="site-btn success" [routerLink]="['/Account/Categories',item.categoryId]">باز کردن
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="pagination-custom">
+      <li [ngClass]="{'disabled': categories.activePage == 1}" (click)="updateCategories(categories.activePage - 1)">
+        <i class="far fa-angle-right"></i>
+      </li>
+
+
+      <li [ngClass]="{'active': page == categories.activePage}" *ngFor="let page of pages"
+          (click)="updateCategories(page)">
+        {{page}}
+      </li>
+
+      <li [ngClass]="{'disabled': categories.activePage >= categories.endPage}"
+          (click)="updateCategories(categories.activePage + 1)">
+        <i class="far fa-angle-left"></i>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <div *ngIf="loader" class="preloader"></div>
+  <router-outlet></router-outlet>
+</div>
+
+

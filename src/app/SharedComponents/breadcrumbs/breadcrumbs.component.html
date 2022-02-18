@@ -1,0 +1,17 @@
+<div class="breadcrumbs" data-aos="fade-down">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>{{data.breadCrumbsTitle}}</h2>
+      <ol>
+        <li>
+          <a routerLink="" [routerLinkActiveOptions]="{exact:true}"
+             routerLinkActive="active">خانه</a>
+        </li>
+        <li *ngFor="let item of data.urls">
+          <a routerLink="{{item.url}}" [routerLinkActiveOptions]="{exact:item.exact}"
+             routerLinkActive="active">{{item.name}}</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

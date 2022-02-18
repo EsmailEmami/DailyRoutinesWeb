@@ -1,0 +1,82 @@
+<div class="modal-header-custom">
+  <h2 class="header-title">افزودن فعالیت</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="newActionForm" (ngSubmit)="submitNewActionForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ newActionErrorText }}
+      {{ newActionFailedCounter <= 1 ? "" : "( " + newActionFailedCounter + " )" }}
+    </p>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <select formControlName="category">
+          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
+        </select>
+
+        <p *ngIf="newActionForm.controls.category.errors?.required" class="select-error">
+          لطفا عنوان فعالیت را وارد کنید
+        </p>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" formControlName="actionTitle"/>
+          <label>عنوان فعالیت</label>
+
+          <span *ngIf="newActionForm.controls.actionTitle.touched">
+          <p *ngIf="newActionForm.controls.actionTitle.errors?.required">
+            لطفا عنوان فعالیت را وارد کنید
+          </p>
+          <p *ngIf="newActionForm.controls.actionTitle.errors?.maxlength">
+            عنوان فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          </p>
+        </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-fill">
+      <textarea type="text" formControlName="actionDescription"></textarea>
+      <label>توضیحات</label>
+
+      <span *ngIf="newActionForm.controls.actionDescription.touched">
+          <p *ngIf="newActionForm.controls.actionDescription.errors?.required">
+            لطفا توضیحات فعالیت را وارد کنید
+          </p>
+          <p *ngIf="newActionForm.controls.actionDescription.errors?.maxlength">
+            توضیحات فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="newActionForm.invalid"
+          type="submit"
+          class="{{ newActionSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()"
+        >
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+

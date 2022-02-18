@@ -1,0 +1,122 @@
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+  <div *ngIf="lastActions != null">
+    <div class="box-data" data-aos="zoom-in">
+      <div class="data-header">
+        <h2 class="info">اخرین فعالیت ها</h2>
+
+        <div>
+          <button
+            class="site-btn success"
+            (click)="newAction()"
+          >
+            فعالیت جدید
+          </button>
+          <button class="site-btn warning" (click)="showActionsFilterItems()">
+            فیلتر
+          </button>
+        </div>
+      </div>
+
+      <div class="data-filter" [ngClass]="showActionsFilter? 'd-block':'d-none'">
+        <div class="input">
+          <input
+            type="text"
+            placeholder="دنبال چی میگردی..."
+            [(ngModel)]="lastActions.search"
+            (keyup.enter)="updateLastActions()"
+          />
+          <button type="button" (click)="updateLastActions()">
+            <i class="far fa-search"></i>
+          </button>
+        </div>
+
+        <div class="row mt-2">
+          <div class="select-box col-xs-12 col-sm-3">
+            <select [(ngModel)]="lastActions.year" (change)="updateSelect('month-section')">
+              <option *ngFor="let year of years" [value]="year.value">{{year.name}}</option>
+            </select>
+          </div>
+          <div class="select-box col-xs-12 col-sm-5">
+            <select [(ngModel)]="lastActions.month" id="month-section" (change)="updateSelect('month-section')">
+              <option *ngFor="let month of months" [value]="month.value">{{month.name}}</option>
+            </select>
+          </div>
+          <div class="select-box col-xs-12 col-sm-4">
+            <select id="day-section" [(ngModel)]="lastActions.day" (change)="updateSelect('day-section')">
+              <option *ngFor="let day of days" [value]="day.value">{{day.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-block">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">عنوان</th>
+            <th scope="col">زمان ساخت</th>
+            <th scope="col">دستورات</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of lastActions.items; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ item.actionTitle }}</td>
+            <td>{{ item.createDate }}</td>
+            <td>
+              <button
+                class="site-btn info"
+                (click)="actionDetail(item.actionId)">
+                جزئیات
+              </button>
+              <button
+                class="site-btn warning"
+                (click)="editAction(item.actionId)">
+                ویرایش
+              </button>
+              <button
+                class="site-btn danger"
+                (click)="deleteAction(item.actionId, item.actionTitle)">
+                حذف
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="pagination-custom">
+        <li
+          [ngClass]="{ disabled: lastActions.activePage == 1 }"
+          (click)="updateLastActions(lastActions.activePage - 1)"
+        >
+          <i class="far fa-angle-right"></i>
+        </li>
+
+        <li
+          [ngClass]="{ active: page == lastActions.activePage }"
+          *ngFor="let page of pages"
+          (click)="updateLastActions(page)"
+        >
+          {{ page }}
+        </li>
+
+        <li
+          [ngClass]="{
+            disabled: lastActions.activePage >= lastActions.endPage
+          }"
+          (click)="updateLastActions(lastActions.activePage + 1)"
+        >
+          <i class="far fa-angle-left"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>

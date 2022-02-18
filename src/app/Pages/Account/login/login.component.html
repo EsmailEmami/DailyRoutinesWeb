@@ -1,0 +1,91 @@
+<!-- ======= Header ======= -->
+<app-site-header></app-site-header>
+<!-- End Header -->
+
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<!-- ======= Inner Page ======= -->
+<section class="login-page">
+  <div class="container" data-aos="fade-up">
+    <div class="inner">
+      <div class="inner-data">
+        <div class="login-logo">
+          <a href="#">Daily Routines</a>
+        </div>
+
+        <div class="login-title">
+          <p>ورود به سایت</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+
+          <p class="text-danger">{{errorText}} {{failedCounter <= 1 ? '' : '( ' + failedCounter + ' )'}}</p>
+
+          <div class="form-fill">
+            <input type="text" class="left" formControlName="email" email/>
+            <label>ایمیل</label>
+
+            <span *ngIf="loginForm.controls.email.touched">
+              <p *ngIf="loginForm.controls.email.errors?.required">
+              لطفا ایمیل را وارد کنید
+            </p>
+              <p *ngIf="loginForm.controls.email.errors?.maxlength">
+              ایمیل وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            </p>
+               <p *ngIf="loginForm.controls.email.errors?.email">
+             لطفا ایمیل را درست وارد کنید
+            </p>
+           </span>
+          </div>
+
+
+          <div class="form-fill">
+            <input type="password" class="left" formControlName="password"/>
+            <label>رمز عبور</label>
+
+            <span *ngIf="loginForm.controls.password.touched">
+              <p *ngIf="loginForm.controls.password.errors?.required">
+              لطفا رمز عبور را وارد کنید
+            </p>
+              <p *ngIf="loginForm.controls.password.errors?.maxlength">
+              رمز عبور وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+           </span>
+          </div>
+
+
+          <div class="form-fill-button">
+            <button [disabled]="loginForm.invalid" type="submit"
+                    class="{{sniper? 'button-loading':''}}">
+              <span>
+                ورود
+              </span>
+            </button>
+          </div>
+
+
+        </form>
+
+        <div class="login-options">
+          <div>
+            <i class="bi bi-question-circle question-icon"></i>
+            <p>حساب کاربری نساخته اید؟</p>
+            <a routerLink="/Register">ثبت نام</a>
+          </div>
+          <div>
+            <i class="bi bi-question-circle question-icon"></i>
+            <p>رمز عبور خود را فراموش کردید؟</p>
+            <a href="#">بازیابی رمز عبور</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Inner Page -->
+
+<!-- ======= Footer ======= -->
+<app-site-footer></app-site-footer>
+<!-- End Footer -->

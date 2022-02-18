@@ -1,0 +1,134 @@
+<!-- ======= Header ======= -->
+<app-site-header></app-site-header>
+<!-- End Header -->
+
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<!-- ======= Blog Section ======= -->
+<section class="login-page">
+  <div class="container" data-aos="fade-up">
+    <div class="inner">
+      <div class="inner-data">
+        <div class="login-logo">
+          <a href="#">Daily Routines</a>
+        </div>
+
+        <div class="login-title">
+          <p>ثبت نام در سایت</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+
+          <p class="text-danger">{{errorText}}</p>
+
+          <div class="form-fill">
+            <input type="text" tabindex="1" formControlName="firstName"/>
+            <label>نام</label>
+            <span *ngIf="registerForm.controls.firstName.touched">
+              <p *ngIf="registerForm.controls.firstName.errors?.required">
+              لطفا نام را وارد کنید
+            </p>
+              <p *ngIf="registerForm.controls.firstName.errors?.maxlength">
+              نام وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            </p>
+           </span>
+          </div>
+
+          <div class="form-fill">
+            <input type="text" tabindex="2" formControlName="lastName"/>
+            <label>نام خانوادگی</label>
+
+            <span *ngIf="registerForm.controls.lastName.touched">
+              <p *ngIf="registerForm.controls.lastName.errors?.required">
+              لطفا نام خانوادگی را وارد کنید
+            </p>
+              <p *ngIf="registerForm.controls.lastName.errors?.maxlength">
+              نام خانوادگی وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            </p>
+           </span>
+          </div>
+
+
+          <div class="form-fill">
+            <input type="text" tabindex="3" class="left" formControlName="email" email/>
+            <label>ایمیل</label>
+
+            <span *ngIf="registerForm.controls.email.touched">
+              <p *ngIf="registerForm.controls.email.errors?.required">
+              لطفا ایمیل را وارد کنید
+            </p>
+              <p *ngIf="registerForm.controls.email.errors?.maxlength">
+              ایمیل وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            </p>
+               <p *ngIf="registerForm.controls.email.errors?.email">
+             لطفا ایمیل را درست وارد کنید
+            </p>
+           </span>
+          </div>
+
+
+          <div class="form-fill">
+            <input type="password" tabindex="4" class="left" formControlName="password"/>
+            <label>رمز عبور</label>
+
+            <span *ngIf="registerForm.controls.password.touched">
+              <p *ngIf="registerForm.controls.password.errors?.required">
+              لطفا رمز عبور را وارد کنید
+            </p>
+              <p *ngIf="registerForm.controls.password.errors?.maxlength">
+              رمز عبور وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+           </span>
+          </div>
+
+
+          <div class="form-fill">
+            <input type="password" tabindex="5" class="left" formControlName="confirmPassword"/>
+            <label>تکرار رمز عبور</label>
+
+
+            <span *ngIf="registerForm.controls.confirmPassword.touched">
+              <p *ngIf="registerForm.controls.confirmPassword.errors?.required">
+              لطفا تکرار رمز عبور را وارد کنید
+            </p>
+              <p *ngIf="registerForm.controls.confirmPassword.errors?.maxlength">
+              تکرار رمز عبور وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+           </span>
+          </div>
+
+          <div class="form-fill-button">
+            <button [disabled]="registerForm.invalid" type="submit"
+                    class="{{sniper? 'button-loading':''}}">
+              <span>
+                ورود
+              </span>
+            </button>
+          </div>
+
+
+        </form>
+
+        <div class="login-options">
+          <div>
+            <i class="bi bi-question-circle question-icon"></i>
+            <p>حساب کاربری ساخته اید؟</p>
+            <a routerLink="/Login">ورود</a>
+          </div>
+          <div>
+            <i class="bi bi-question-circle question-icon"></i>
+            <p>رمز عبور خود را فراموش کردید؟</p>
+            <a href="#">بازیابی رمز عبور</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Inner Page -->
+
+<!-- ======= Footer ======= -->
+<app-site-footer></app-site-footer>
+<!-- End Footer -->
