@@ -3,6 +3,10 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {AuthenticationService} from "../../../../Services/authentication.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UsersService} from "../../../../Services/users.service";
+import {EditDashboardDTO} from "../../../../DTOs/Users/EditDashboardDTO";
+import {ResponseResultStatusType} from "../../../../Utilities/Enums/ResponseResultStatusType";
+import {UserDashboard} from "../../../../DTOs/Users/UserDashboard";
+import {CurrentUser} from "../../../../DTOs/Account/CurrentUser";
 
 declare function inputJs(): any;
 
@@ -62,32 +66,59 @@ export class EditDashboardComponent implements OnInit, AfterViewInit {
 
       this.editDashboardSniper = true;
 
+      const userData = new EditDashboardDTO(
+        this.editDashboardForm.controls.firstName.value,
+        this.editDashboardForm.controls.lastName.value,
+      );
 
+      this.usersService.editUserDashboard(userData).subscribe(res => {
 
+          this.editDashboardSniper = false;
 
-      // const actionData = new AddActionDTO(
-      //   categoryId,
-      //   this.newActionForm.controls.actionTitle.value,
-      //   this.newActionForm.controls.actionDescription.value,
-      // );
-      //
-      // this.actionsService.addAction(actionData).subscribe(res => {
-      //
-      //     this.newActionSniper = false;
-      //
-      //     if (res.status === ResponseResultStatusType.Error) {
-      //
-      //       if (this.newActionErrorText !== null && this.newActionErrorText == res.data.message) {
-      //         this.newActionFailedCounter++;
-      //       }
-      //       this.newActionErrorText = res.data.message;
-      //
-      //     } else {
-      //       this.newActionForm.reset();
-      //       this.activeModal.close('فعالیت با موفقیت ثبت شد.');
-      //     }
-      //   }
-      // );
+          if (res.status === ResponseResultStatusType.Error) {
+
+            if (this.editDashboardErrorText !== null && this.editDashboardErrorText == res.data.message) {
+              this.editDashboardFailedCounter++;
+            }
+            this.editDashboardErrorText = res.data.message;
+
+          } else {
+            this.editDashboardForm.reset();
+
+            let currentUserDashboard!: UserDashboard;
+
+            // change user dashboard
+            this.usersService.getCurrentUserDashboard().subscribe(response => {
+              currentUserDashboard = response;
+            });
+
+            if (currentUserDashboard != null) {
+
+              currentUserDashboard.firstName = userData.firstName;
+              currentUserDashboard.lastName = userData.lastName;
+
+              this.usersService.setCurrentUserDashboard(currentUserDashboard);
+            }
+
+            let currentUser!: CurrentUser;
+
+            // change current user data
+            this.authenticationService.getCurrentUser().subscribe(response => {
+              currentUser = response;
+            });
+
+            if (currentUser != null) {
+
+              currentUser.firstName = userData.firstName;
+              currentUser.lastName = userData.lastName;
+
+              this.authenticationService.setCurrentUser(currentUser);
+            }
+
+            this.activeModal.close('مشخصات شما با موفقیت ویرایش شد.');
+          }
+        }
+      );
     }
 
   }

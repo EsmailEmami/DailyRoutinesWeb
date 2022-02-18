@@ -6,6 +6,10 @@ import { BreadCrumbsResponse, UrlOfBreadCrumbs } from "../../../DTOs/breadCrumbs
 import { CategoriesService } from "../../../Services/categories.service";
 import { FilterCategoriesDTO } from "../../../DTOs/Routine/FilterCategoriesDTO";
 import { GenerateDTO } from "../../../Utilities/Generator/GenerateDTO";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ActionDetailComponent} from "../../Action/action-detail/action-detail.component";
+import {EditDashboardComponent} from "./edit-dashboard/edit-dashboard.component";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +25,17 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
+  private Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
 
   loader: boolean = true;
 
@@ -32,7 +47,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userService: UsersService,
-    private categoriesService: CategoriesService) {
+    private categoriesService: CategoriesService,
+    private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -92,6 +108,26 @@ export class DashboardComponent implements OnInit {
     });
 
     this.loader = false;
+  }
+
+  editDashboard() {
+    const modalRef = this.modalService.open(EditDashboardComponent);
+
+    modalRef.result.then((result: string) => {
+      if (result) {
+        this.Toast.fire({
+          icon: 'success',
+          title: result
+        });
+      }
+    }).catch(e => {
+      if (e) {
+        this.Toast.fire({
+          icon: 'warning',
+          title: e
+        });
+      }
+    });
   }
 
 }

@@ -1,54 +1,51 @@
 <div class="modal-header-custom">
-  <h2 class="header-title">افزودن فعالیت</h2>
+  <h2 class="header-title">ویرایش مشخصات</h2>
   <span class="close" (click)="closeModal()">&times;</span>
 </div>
 
-<form [formGroup]="newActionForm" (ngSubmit)="submitNewActionForm()">
+<form [formGroup]="editDashboardForm" (ngSubmit)="submitEditDashboardForm()">
   <div class="modal-body-custom">
     <p class="text-danger">
-      {{ newActionErrorText }}
-      {{ newActionFailedCounter <= 1 ? "" : "( " + newActionFailedCounter + " )" }}
+      {{ editDashboardErrorText }}
+      {{ editDashboardFailedCounter <= 1 ? "" : "( " + editDashboardFailedCounter + " )" }}
     </p>
     <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <select formControlName="category">
-          <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
-        </select>
 
-        <p *ngIf="newActionForm.controls.category.errors?.required" class="select-error">
-          لطفا عنوان فعالیت را وارد کنید
-        </p>
-      </div>
 
       <div class="col-sm-12 col-md-6">
         <div class="form-fill">
-          <input type="text" formControlName="actionTitle"/>
+          <input type="text" formControlName="firstName"/>
           <label>عنوان فعالیت</label>
 
-          <span *ngIf="newActionForm.controls.actionTitle.touched">
-          <p *ngIf="newActionForm.controls.actionTitle.errors?.required">
+          <span *ngIf="editDashboardForm.controls.firstName.touched">
+          <p *ngIf="editDashboardForm.controls.firstName.errors?.required">
             لطفا عنوان فعالیت را وارد کنید
           </p>
-          <p *ngIf="newActionForm.controls.actionTitle.errors?.maxlength">
+          <p *ngIf="editDashboardForm.controls.firstName.errors?.maxlength">
             عنوان فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
           </p>
         </span>
         </div>
       </div>
-    </div>
 
-    <div class="form-fill">
-      <textarea type="text" formControlName="actionDescription"></textarea>
-      <label>توضیحات</label>
 
-      <span *ngIf="newActionForm.controls.actionDescription.touched">
-          <p *ngIf="newActionForm.controls.actionDescription.errors?.required">
-            لطفا توضیحات فعالیت را وارد کنید
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" formControlName="lastName"/>
+          <label>عنوان فعالیت</label>
+
+          <span *ngIf="editDashboardForm.controls.lastName.touched">
+          <p *ngIf="editDashboardForm.controls.lastName.errors?.required">
+            لطفا عنوان فعالیت را وارد کنید
           </p>
-          <p *ngIf="newActionForm.controls.actionDescription.errors?.maxlength">
-            توضیحات فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          <p *ngIf="editDashboardForm.controls.lastName.errors?.maxlength">
+            عنوان فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
           </p>
         </span>
+        </div>
+      </div>
+
+
     </div>
   </div>
 
@@ -57,9 +54,9 @@
 
       <div class="col-6">
         <button
-          [disabled]="newActionForm.invalid"
+          [disabled]="editDashboardForm.invalid"
           type="submit"
-          class="{{ newActionSniper ? 'button-loading' : '' }}"
+          class="{{ editDashboardSniper ? 'button-loading' : '' }}"
         >
           <span>ثبت</span>
         </button>
