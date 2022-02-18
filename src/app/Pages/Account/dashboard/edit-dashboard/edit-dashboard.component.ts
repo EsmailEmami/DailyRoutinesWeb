@@ -63,6 +63,8 @@ export class EditDashboardComponent implements OnInit, AfterViewInit {
       this.editDashboardSniper = true;
 
 
+
+
       // const actionData = new AddActionDTO(
       //   categoryId,
       //   this.newActionForm.controls.actionTitle.value,
