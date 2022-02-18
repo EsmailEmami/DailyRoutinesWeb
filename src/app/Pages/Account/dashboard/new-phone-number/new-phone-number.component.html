@@ -1,0 +1,54 @@
+<div class="modal-header-custom">
+  <h2 class="header-title">ویرایش مشخصات</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="newPhoneNumberForm" (ngSubmit)="submitNewPhoneNumberForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ newPhoneNumberErrorText }}
+      {{ newPhoneNumberFailedCounter <= 1 ? "" : "( " + newPhoneNumberFailedCounter + " )" }}
+    </p>
+
+    <div class="form-fill">
+      <input type="text" class="left" formControlName="phoneNumber"/>
+      <label>شماره تلفن</label>
+
+      <span *ngIf="newPhoneNumberForm.controls.phoneNumber.touched">
+          <p *ngIf="newPhoneNumberForm.controls.phoneNumber.errors?.required">
+            لطفا شماره تلفن را وارد کنید
+          </p>
+          <p *ngIf="newPhoneNumberForm.controls.phoneNumber.errors?.maxlength">
+             لطفا شماره تلفن را به درستی وارد کنید
+          </p>
+        </span>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="newPhoneNumberForm.invalid"
+          type="submit"
+          class="{{ newPhoneNumberSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()">
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+

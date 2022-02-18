@@ -19,6 +19,9 @@ import {UsersPageComponent} from "./Pages/Manager/UsersManager/users-page/users-
 import {UserDetailComponent} from "./Pages/Manager/UsersManager/user-detail/user-detail.component";
 import {AddUserComponent} from "./Pages/Manager/UsersManager/add-user/add-user.component";
 import {RolesPageComponent} from "./Pages/Manager/AccessManager/roles-page/roles-page.component";
+import {
+  UserCategoriesRecycleBinComponent
+} from "./Pages/Account/user-categories-recycle-bin/user-categories-recycle-bin.component";
 
 const routes: Routes = [
   {
@@ -81,6 +84,12 @@ const routes: Routes = [
           title: 'فعالیت ها'
         }
       },
+      {
+        path: 'CategoriesRecycleBin', component: UserCategoriesRecycleBinComponent,
+        data: {
+          title: 'بازیافت دسته بندی ها'
+        }
+      }
     ]
   },
   {

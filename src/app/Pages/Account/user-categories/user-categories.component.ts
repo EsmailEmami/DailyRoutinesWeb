@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../../../Services/categories.service";
 import {FilterCategoriesDTO} from "../../../DTOs/Routine/FilterCategoriesDTO";
 import {ResponseResultStatusType} from "../../../Utilities/Enums/ResponseResultStatusType";
@@ -17,12 +17,12 @@ declare function selectDropdown(): any;
   templateUrl: './user-categories.component.html',
   styleUrls: ['./user-categories.component.scss']
 })
-export class UserCategoriesComponent implements OnInit {
+export class UserCategoriesComponent implements OnInit, AfterViewInit {
 
   breadCrumbsData: BreadCrumbsResponse = {
     breadCrumbsTitle: "دسته بندی ها",
     urls: [
-      new UrlOfBreadCrumbs('دسته بندی ها', '/Account/Categories')
+      new UrlOfBreadCrumbs('دسته بندی ها', '/Account/Categories', false)
     ]
   };
 
@@ -78,9 +78,11 @@ export class UserCategoriesComponent implements OnInit {
     });
   }
 
-  showFilterItems() {
+  ngAfterViewInit(): void {
+    setTimeout(selectDropdown, 500);
+  }
 
-    setTimeout(selectDropdown, 1);
+  showFilterItems() {
 
     this.showFilter = !this.showFilter;
   }
@@ -133,15 +135,15 @@ export class UserCategoriesComponent implements OnInit {
   }
 
   getCategories(): void {
-      this.categoriesService.getUserCategories(this.categories).subscribe(res => {
-        this.loader = false;
-        if (res.status == ResponseResultStatusType.Success) {
-          this.categories = res.data;
-          this.pages = [];
-          for (let i = this.categories.startPage; i <= this.categories.endPage; i++) {
-            this.pages.push(i);
-          }
+    this.categoriesService.getUserCategories(this.categories).subscribe(res => {
+      this.loader = false;
+      if (res.status == ResponseResultStatusType.Success) {
+        this.categories = res.data;
+        this.pages = [];
+        for (let i = this.categories.startPage; i <= this.categories.endPage; i++) {
+          this.pages.push(i);
         }
-      });
+      }
+    });
   }
 }

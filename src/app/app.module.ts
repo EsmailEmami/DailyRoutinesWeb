@@ -48,6 +48,7 @@ import { RolesPageComponent } from './Pages/Manager/AccessManager/roles-page/rol
 import { AddRoleComponent } from './Pages/Manager/AccessManager/add-role/add-role.component';
 import { EditRoleComponent } from './Pages/Manager/AccessManager/edit-role/edit-role.component';
 import { NewPhoneNumberComponent } from './Pages/Account/dashboard/new-phone-number/new-phone-number.component';
+import { UserCategoriesRecycleBinComponent } from './Pages/Account/user-categories-recycle-bin/user-categories-recycle-bin.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { NewPhoneNumberComponent } from './Pages/Account/dashboard/new-phone-num
     AddRoleComponent,
     EditRoleComponent,
     NewPhoneNumberComponent,
+    UserCategoriesRecycleBinComponent,
   ],
   imports: [
     BrowserModule,

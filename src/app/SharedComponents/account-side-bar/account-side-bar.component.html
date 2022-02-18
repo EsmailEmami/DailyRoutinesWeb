@@ -9,14 +9,22 @@
         <i class="far fa-home"></i> <span>اطلاعات کاربری</span>
       </a>
     </li>
-    <li [routerLink]="['/Account/Categories']" routerLinkActive="active">
-      <a>
-        <i class="fas fa-inventory"></i> <span>دسته بندی</span>
-      </a>
+    <li class="dropdown" [routerLinkActive]="['show']">
+      <span class="name">
+           <i class="fas fa-inventory"></i> <span>دسته بندی</span>
+      </span>
+      <ul>
+        <li>
+          <a [routerLink]="['/Account/Categories']"><i class="fas fa-inventory"></i> دسته بندی ها</a>
+        </li>
+        <li>
+          <a [routerLink]="['/Account/CategoriesRecycleBin']"><i class="fas fa-recycle"></i> بازیافتی ها</a>
+        </li>
+      </ul>
     </li>
     <li [routerLink]="['/Account/Actions']" routerLinkActive="active">
       <a>
-        <i class="fas fa-inventory"></i> <span>فعالیت ها</span>
+        <i class="fas fa-box-check"></i> <span>فعالیت ها</span>
       </a>
     </li>
 
