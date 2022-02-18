@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { UserDashboard } from 'src/app/DTOs/Users/UserDashboard';
-import { UsersService } from 'src/app/Services/users.service';
-import { ResponseResultStatusType } from 'src/app/Utilities/Enums/ResponseResultStatusType';
-import { BreadCrumbsResponse, UrlOfBreadCrumbs } from "../../../DTOs/breadCrumbs/breadCrumbsResponse";
-import { CategoriesService } from "../../../Services/categories.service";
-import { FilterCategoriesDTO } from "../../../DTOs/Routine/FilterCategoriesDTO";
-import { GenerateDTO } from "../../../Utilities/Generator/GenerateDTO";
+import {Component, OnInit} from '@angular/core';
+import {UserDashboard} from 'src/app/DTOs/Users/UserDashboard';
+import {UsersService} from 'src/app/Services/users.service';
+import {ResponseResultStatusType} from 'src/app/Utilities/Enums/ResponseResultStatusType';
+import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../DTOs/breadCrumbs/breadCrumbsResponse";
+import {CategoriesService} from "../../../Services/categories.service";
+import {FilterCategoriesDTO} from "../../../DTOs/Routine/FilterCategoriesDTO";
+import {GenerateDTO} from "../../../Utilities/Generator/GenerateDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ActionDetailComponent} from "../../Action/action-detail/action-detail.component";
 import {EditDashboardComponent} from "./edit-dashboard/edit-dashboard.component";
 import Swal from "sweetalert2";
+import {NewPhoneNumberComponent} from "./new-phone-number/new-phone-number.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -130,4 +130,23 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  addPhoneNumber() {
+    const modalRef = this.modalService.open(NewPhoneNumberComponent);
+
+    modalRef.result.then((result: string) => {
+      if (result) {
+        this.Toast.fire({
+          icon: 'success',
+          title: result
+        });
+      }
+    }).catch(e => {
+      if (e) {
+        this.Toast.fire({
+          icon: 'warning',
+          title: e
+        });
+      }
+    });
+  }
 }

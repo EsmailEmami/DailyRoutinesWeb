@@ -15,14 +15,14 @@
       <div class="col-sm-12 col-md-6">
         <div class="form-fill">
           <input type="text" formControlName="firstName"/>
-          <label>عنوان فعالیت</label>
+          <label>نام</label>
 
           <span *ngIf="editDashboardForm.controls.firstName.touched">
           <p *ngIf="editDashboardForm.controls.firstName.errors?.required">
-            لطفا عنوان فعالیت را وارد کنید
+            لطفا نام را وارد کنید
           </p>
           <p *ngIf="editDashboardForm.controls.firstName.errors?.maxlength">
-            عنوان فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            نام وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
           </p>
         </span>
         </div>
@@ -32,14 +32,14 @@
       <div class="col-sm-12 col-md-6">
         <div class="form-fill">
           <input type="text" formControlName="lastName"/>
-          <label>عنوان فعالیت</label>
+          <label>نام خانوادگی</label>
 
           <span *ngIf="editDashboardForm.controls.lastName.touched">
           <p *ngIf="editDashboardForm.controls.lastName.errors?.required">
-            لطفا عنوان فعالیت را وارد کنید
+            لطفا نام خانوادگی را وارد کنید
           </p>
           <p *ngIf="editDashboardForm.controls.lastName.errors?.maxlength">
-            عنوان فعالیت وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+            نام خانوادگی وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
           </p>
         </span>
         </div>

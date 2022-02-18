@@ -31,4 +31,12 @@ export class UsersService {
   editUserDashboard(userData: EditDashboardDTO): Observable<IResponseResult<any>> {
     return this.http.put<IResponseResult<any>>('/users/EditDashboard', userData);
   }
+
+  AddUserPhoneNumber(phoneNumber: string): Observable<IResponseResult<any>> {
+    return this.http.post<IResponseResult<any>>('/users/AddPhoneNumber', null, {
+      params: {
+        phoneNumber: phoneNumber
+      }
+    });
+  }
 }

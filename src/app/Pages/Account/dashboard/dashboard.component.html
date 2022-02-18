@@ -19,7 +19,9 @@
           <button class="site-btn warning" (click)="editDashboard()">
             ویرایش
           </button>
-
+          <button class="site-btn success" (click)="addPhoneNumber()" *ngIf="user.phoneNumber == null">
+            افزودن شماره تلفن
+          </button>
         </div>
       </div>
 

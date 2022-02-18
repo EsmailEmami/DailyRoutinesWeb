@@ -47,6 +47,7 @@ import { UserActionsComponent } from './Pages/Manager/UsersManager/user-detail/u
 import { RolesPageComponent } from './Pages/Manager/AccessManager/roles-page/roles-page.component';
 import { AddRoleComponent } from './Pages/Manager/AccessManager/add-role/add-role.component';
 import { EditRoleComponent } from './Pages/Manager/AccessManager/edit-role/edit-role.component';
+import { NewPhoneNumberComponent } from './Pages/Account/dashboard/new-phone-number/new-phone-number.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { EditRoleComponent } from './Pages/Manager/AccessManager/edit-role/edit-
     RolesPageComponent,
     AddRoleComponent,
     EditRoleComponent,
+    NewPhoneNumberComponent,
   ],
   imports: [
     BrowserModule,
