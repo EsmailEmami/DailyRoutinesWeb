@@ -1,1 +1,92 @@
-<p>users-page works!</p>
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+  <div class="text-center" data-aos="flip-left">
+    <h1 class="title">کاربران وبسایت</h1>
+  </div>
+
+  <div class="box-data" data-aos="zoom-in">
+    <div class="data-header">
+      <h2 class="info">کاربران</h2>
+
+      <div>
+        <button class="site-btn warning" (click)="showUsersFilterItems()">فیلتر</button>
+      </div>
+    </div>
+
+    <div class="data-filter" [class.d-block]="showFilter">
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 mb-2">
+          <div class="input">
+            <input type="text" placeholder="دنبال چی میگردی..." [(ngModel)]="users.search"
+                   (keyup.enter)="updateUsers()">
+            <button type="button" (click)="updateUsers()"><i class="far fa-search"></i></button>
+          </div>
+        </div>
+        <div class="select-box col-xs-12 col-sm-4">
+          <select [(ngModel)]="users.type" (change)="updateUsers()">
+            <option [value]="'all'">همه</option>
+            <option [value]="'active'">فعال</option>
+            <option [value]="'blocked'">مسدود شده</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-block">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">نام و نام خانوادگی</th>
+          <th scope="col">شماره تلفن</th>
+          <th scope="col">ایمیل</th>
+          <th scope="col">دستورات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of users.items; let i = index">
+          <th scope="row">{{ i + 1}}</th>
+          <td>{{item.fullName}}</td>
+          <td><span dir="ltr">{{item.phoneNumber | hideNumber}}</span></td>
+          <td>{{item.email | hideLength:2:3}}</td>
+          <td>
+            <button class="site-btn info">جزئیات
+            </button>
+            <button *ngIf="!item.isBlock" class="site-btn danger" (click)="blockUser(item.userId,item.fullName)">مسدود کردن
+            </button>
+            <button *ngIf="item.isBlock" class="site-btn warning" (click)="activeUser(item.userId,item.fullName)">فعال کردن
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="pagination-custom">
+      <li [ngClass]="{'disabled': users.activePage == 1}" (click)="updateUsers(users.activePage - 1)">
+        <i class="far fa-angle-right"></i>
+      </li>
+
+
+      <li [ngClass]="{'active': page == users.activePage}" *ngFor="let page of pages"
+          (click)="updateUsers(page)">
+        {{page}}
+      </li>
+
+      <li [ngClass]="{'disabled': users.activePage >= users.endPage}"
+          (click)="updateUsers(users.activePage + 1)">
+        <i class="far fa-angle-left"></i>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>
+
+

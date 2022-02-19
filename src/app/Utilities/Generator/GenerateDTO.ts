@@ -2,6 +2,7 @@ import {FilterActionsDTO} from '../../DTOs/Routine/FilterActionsDTO';
 import {FilterCategoriesDTO} from "../../DTOs/Routine/FilterCategoriesDTO";
 import {FilterRoutinesOrderByTypes} from "../Enums/FilterRoutinesOrderByTypes";
 import {FilterUserLastActionsDTO} from "../../DTOs/Routine/FilterUserLastActions";
+import {FilterUsersDTO} from "../../DTOs/Users/FilterUsersDTO";
 
 export class GenerateDTO {
 
@@ -54,6 +55,21 @@ export class GenerateDTO {
       takeEntity,
       0,
       0
+    );
+  }
+
+  public static generateFilterUsersDTO(takeEntity: number, type: string): FilterUsersDTO {
+    return new FilterUsersDTO(
+      '',
+      type,
+      [],
+      1,
+      0,
+      0,
+      0,
+      takeEntity,
+      0,
+      1,
     );
   }
 }

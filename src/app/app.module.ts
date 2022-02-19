@@ -56,6 +56,8 @@ import {
 import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
 import {LOADING_BAR_CONFIG, LoadingBarModule} from "@ngx-loading-bar/core";
 import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
+import { HideNumberPipe } from './Pipe/hide-number.pipe';
+import { HideLengthPipe } from './Pipe/hide-length.pipe';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
     EditRoleComponent,
     NewPhoneNumberComponent,
     UserCategoriesRecycleBinComponent,
+    HideNumberPipe,
+    HideLengthPipe
   ],
   imports: [
     BrowserModule,
