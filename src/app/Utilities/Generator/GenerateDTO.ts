@@ -3,6 +3,7 @@ import {FilterCategoriesDTO} from "../../DTOs/Routine/FilterCategoriesDTO";
 import {FilterRoutinesOrderByTypes} from "../Enums/FilterRoutinesOrderByTypes";
 import {FilterUserLastActionsDTO} from "../../DTOs/Routine/FilterUserLastActions";
 import {FilterUsersDTO} from "../../DTOs/Users/FilterUsersDTO";
+import {FilterRolesDTO} from "../../DTOs/Access/FilterRolesDTO";
 
 export class GenerateDTO {
 
@@ -62,6 +63,20 @@ export class GenerateDTO {
     return new FilterUsersDTO(
       '',
       type,
+      [],
+      1,
+      0,
+      0,
+      0,
+      takeEntity,
+      0,
+      1,
+    );
+  }
+
+  public static generateFilterRolesDTO(takeEntity: number): FilterRolesDTO {
+    return new FilterRolesDTO(
+      '',
       [],
       1,
       0,

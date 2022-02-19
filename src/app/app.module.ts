@@ -58,6 +58,8 @@ import {LOADING_BAR_CONFIG, LoadingBarModule} from "@ngx-loading-bar/core";
 import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
 import { HideNumberPipe } from './Pipe/hide-number.pipe';
 import { HideLengthPipe } from './Pipe/hide-length.pipe';
+import {AccessService} from "./Services/access.service";
+import { AdminUsersComponent } from './Pages/Manager/UsersManager/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,8 @@ import { HideLengthPipe } from './Pipe/hide-length.pipe';
     NewPhoneNumberComponent,
     UserCategoriesRecycleBinComponent,
     HideNumberPipe,
-    HideLengthPipe
+    HideLengthPipe,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +131,8 @@ import { HideLengthPipe } from './Pipe/hide-length.pipe';
     AuthenticationService,
     UsersService,
     CategoriesService,
-    ActionsService
+    ActionsService,
+    AccessService
   ],
   bootstrap: [AppComponent]
 })

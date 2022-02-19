@@ -1,1 +1,55 @@
-<p>edit-role works!</p>
+<div class="modal-header-custom">
+  <h2 class="header-title">ویرایش مقام {{editRoleForm.controls.roleName.value}}</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="editRoleForm" (ngSubmit)="submitEditRoleForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ editRoleErrorText }}
+      {{ editRoleFailedCounter <= 1 ? "" : "( " + editRoleFailedCounter + " )" }}
+    </p>
+
+    <div class="form-fill">
+      <input type="text" class="left" formControlName="roleName"/>
+      <label>نام مقام</label>
+
+      <span *ngIf="editRoleForm.controls.roleName.touched">
+          <p *ngIf="editRoleForm.controls.roleName.errors?.required">
+            لطفا نام مقام را وارد کنید
+          </p>
+          <p *ngIf="editRoleForm.controls.roleName.errors?.maxlength">
+            نام مقام وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="editRoleForm.invalid"
+          type="submit"
+          class="{{ editRoleSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()"
+        >
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+

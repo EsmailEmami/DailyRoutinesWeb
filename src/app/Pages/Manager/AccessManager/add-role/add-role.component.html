@@ -1,1 +1,53 @@
-<p>add-role works!</p>
+<div class="modal-header-custom">
+  <h2 class="header-title">افزودن مقام</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="newRoleForm" (ngSubmit)="submitNewRoleForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ newRoleErrorText }}
+      {{ newRoleFailedCounter <= 1 ? "" : "( " + newRoleFailedCounter + " )" }}
+    </p>
+
+    <div class="form-fill">
+      <input type="text" class="left" formControlName="roleName"/>
+      <label>نام مقام</label>
+
+      <span *ngIf="newRoleForm.controls.roleName.touched">
+          <p *ngIf="newRoleForm.controls.roleName.errors?.required">
+            لطفا نام مقام را وارد کنید
+          </p>
+          <p *ngIf="newRoleForm.controls.roleName.errors?.maxlength">
+            نام مقام وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="newRoleForm.invalid"
+          type="submit"
+          class="{{ newRoleSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()"
+        >
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+

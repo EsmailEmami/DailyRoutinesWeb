@@ -60,6 +60,25 @@ export class UsersService {
     });
   }
 
+  getAdminUsers(filter: FilterUsersDTO): Observable<IResponseResult<FilterUsersDTO>> {
+
+    if (filter.search == null) {
+      filter.search = '';
+    }
+
+    const params = new HttpParams()
+      .set('pageId', filter.pageId)
+      .set('search', filter.search)
+      .set('type', filter.type)
+      .set('takeEntity', filter.takeEntity);
+
+
+    return this.http.get<IResponseResult<FilterUsersDTO>>('/UsersManager/AdminUsers', {
+      params: params
+    });
+  }
+
+
   blockUser(userId: string): Observable<IResponseResult<any>> {
     return this.http.put<IResponseResult<any>>('/UsersManager/BlockUser', null, {
       params: {

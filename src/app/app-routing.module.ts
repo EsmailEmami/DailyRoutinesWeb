@@ -22,6 +22,7 @@ import {RolesPageComponent} from "./Pages/Manager/AccessManager/roles-page/roles
 import {
   UserCategoriesRecycleBinComponent
 } from "./Pages/Account/user-categories-recycle-bin/user-categories-recycle-bin.component";
+import {AdminUsersComponent} from "./Pages/Manager/UsersManager/admin-users/admin-users.component";
 
 const routes: Routes = [
   {
@@ -101,6 +102,9 @@ const routes: Routes = [
       },
       {
         path: 'Users/:userId', component: UserDetailComponent,
+      },
+      {
+        path: 'Admins', component: AdminUsersComponent,
       },
       {
         path: 'Roles', component: RolesPageComponent,

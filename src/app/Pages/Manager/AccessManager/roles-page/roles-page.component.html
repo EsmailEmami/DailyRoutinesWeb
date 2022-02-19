@@ -1,1 +1,74 @@
-<p>roles-page works!</p>
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+  <div class="text-center" data-aos="flip-left">
+    <h1 class="title">مدیریت مقام ها</h1>
+  </div>
+
+  <div class="box-data" data-aos="zoom-in">
+    <div class="data-header">
+      <h2 class="info">مقام ها</h2>
+
+      <div>
+        <button class="site-btn success" (click)="newRole()">مقام جدید</button>
+        <button class="site-btn warning" (click)="showRolesFilterItems()">فیلتر</button>
+      </div>
+    </div>
+
+    <div class="data-filter" [class.d-block]="showFilter">
+      <div class="input">
+        <input type="text" placeholder="دنبال چی میگردی..." [(ngModel)]="roles.search"
+               (keyup.enter)="updateRoles()">
+        <button type="button" (click)="updateRoles()"><i class="far fa-search"></i></button>
+      </div>
+    </div>
+
+    <div class="d-block">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">نام مقام</th>
+          <th scope="col">دستورات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of roles.items; let i = index">
+          <th scope="row">{{ i + 1}}</th>
+          <td>{{item.roleName}}</td>
+          <td>
+            <button class="site-btn warning" (click)="editRole(item.roleId)">ویرایش
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="pagination-custom">
+      <li [ngClass]="{'disabled': roles.activePage == 1}" (click)="updateRoles(roles.activePage - 1)">
+        <i class="far fa-angle-right"></i>
+      </li>
+
+
+      <li [ngClass]="{'active': page == roles.activePage}" *ngFor="let page of pages"
+          (click)="updateRoles(page)">
+        {{page}}
+      </li>
+
+      <li [ngClass]="{'disabled': roles.activePage >= roles.endPage}"
+          (click)="updateRoles(roles.activePage + 1)">
+        <i class="far fa-angle-left"></i>
+      </li>
+
+    </ul>
+
+  </div>
+
+
+  <div *ngIf="loader" class="preloader"></div>
+</div>
+
+
