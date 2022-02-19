@@ -6,6 +6,7 @@ import {AddRoleDTO} from "../DTOs/Access/AddRoleDTO";
 import {EditRoleDTO} from "../DTOs/Access/EditRoleDTO";
 import {FilterCategoriesDTO} from "../DTOs/Routine/FilterCategoriesDTO";
 import {FilterRolesDTO} from "../DTOs/Access/FilterRolesDTO";
+import {ItemsForSelectDTO} from "../DTOs/Common/ItemsForSelectDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -48,4 +49,7 @@ export class AccessService {
     });
   }
 
+  getRolesForSelect(): Observable<IResponseResult<ItemsForSelectDTO[]>> {
+    return this.http.get<IResponseResult<ItemsForSelectDTO[]>>('/AccessManager/RolesForSelect');
+  }
 }

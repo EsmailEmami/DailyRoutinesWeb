@@ -6,6 +6,7 @@ import {IResponseResult} from "../DTOs/Common/IResponseResult";
 import {EditDashboardDTO} from "../DTOs/Users/EditDashboardDTO";
 import {FilterCategoriesDTO} from "../DTOs/Routine/FilterCategoriesDTO";
 import {FilterUsersDTO} from "../DTOs/Users/FilterUsersDTO";
+import {EditUserDTO} from "../DTOs/Users/EditUserDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -78,7 +79,6 @@ export class UsersService {
     });
   }
 
-
   blockUser(userId: string): Observable<IResponseResult<any>> {
     return this.http.put<IResponseResult<any>>('/UsersManager/BlockUser', null, {
       params: {
@@ -93,5 +93,17 @@ export class UsersService {
         userId: userId
       }
     });
+  }
+
+  getUserForEdit(userId: string): Observable<IResponseResult<EditUserDTO>> {
+    return this.http.get<IResponseResult<any>>('/UsersManager/EditUser', {
+      params: {
+        userId: userId
+      }
+    });
+  }
+
+  editUser(userData: EditUserDTO): Observable<IResponseResult<any>> {
+    return this.http.put<IResponseResult<any>>('/UsersManager/EditUser', userData);
   }
 }

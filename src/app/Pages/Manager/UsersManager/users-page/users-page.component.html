@@ -53,11 +53,11 @@
           <td><span dir="ltr">{{item.phoneNumber | hideNumber}}</span></td>
           <td>{{item.email | hideLength:2:3}}</td>
           <td>
-            <button class="site-btn info">جزئیات
+            <button class="site-btn warning" (click)="editUser(item.userId)">ویرایش
             </button>
             <button *ngIf="!item.isBlock" class="site-btn danger" (click)="blockUser(item.userId,item.fullName)">مسدود کردن
             </button>
-            <button *ngIf="item.isBlock" class="site-btn warning" (click)="activeUser(item.userId,item.fullName)">فعال کردن
+            <button *ngIf="item.isBlock" class="site-btn success" (click)="activeUser(item.userId,item.fullName)">فعال کردن
             </button>
           </td>
         </tr>
