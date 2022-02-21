@@ -55,10 +55,10 @@ export class AddRoleComponent implements OnInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.newRoleErrorText !== null && this.newRoleErrorText == res.data.message) {
+            if (this.newRoleErrorText !== null && this.newRoleErrorText == res.message) {
               this.newRoleFailedCounter++;
             }
-            this.newRoleErrorText = res.data.message;
+            this.newRoleErrorText = res.message;
 
           } else {
             this.newRoleForm.reset();

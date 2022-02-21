@@ -1,1 +1,60 @@
-<p>user-detail works!</p>
+<!-- ======= Breadcrumbs ======= -->
+<app-breadcrumbs [parentData]="breadCrumbsData"></app-breadcrumbs>
+<!-- End Breadcrumbs -->
+
+<div class="content-main">
+  <div class="text-center" data-aos="flip-left">
+    <h1 class="title">مشخصات کاربر {{user.firstName}}  {{user.lastName}}</h1>
+  </div>
+
+  <div class="box-data" data-aos="zoom-in">
+    <div class="data-header">
+      <h2 class="info">اطلاعات کاربری</h2>
+
+      <div>
+        <button class="site-btn warning" (click)="editUser()">
+          ویرایش
+        </button>
+        <button *ngIf="!user.isBlock" class="site-btn danger" (click)="blockUser()">مسدود
+          کردن
+        </button>
+        <button *ngIf="user.isBlock" class="site-btn success" (click)="activeUser()">فعال
+          کردن
+        </button>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-xs-1 row-cols-sm-2">
+      <div class="col">
+        <div class="item">
+          <label>نام و خانوادگی:</label>
+          <span>{{user.firstName}}  {{user.lastName}}</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <label>شماره تلفن:</label>
+          <span>{{user.phoneNumber}}</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <label>ایمیل:</label>
+          <span>{{user.email}}</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="item">
+          <label>تاریخ ثبت نام:</label>
+          <span>{{user.createDate}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-user-categories-for-admin [userId]="user.userId"></app-user-categories-for-admin>
+  <app-user-roles [userId]="user.userId"></app-user-roles>
+  <app-user-actions [userId]="user.userId"></app-user-actions>
+</div>
+
+

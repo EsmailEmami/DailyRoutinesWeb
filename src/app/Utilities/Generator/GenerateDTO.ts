@@ -7,9 +7,9 @@ import {FilterRolesDTO} from "../../DTOs/Access/FilterRolesDTO";
 
 export class GenerateDTO {
 
-  public static generateFilterCategoriesDTO(takeEntity: number): FilterCategoriesDTO {
+  public static generateFilterCategoriesDTO(takeEntity: number, userId?: string): FilterCategoriesDTO {
     return new FilterCategoriesDTO(
-      '',
+      userId ? userId : '',
       '',
       FilterRoutinesOrderByTypes.UpdateDate,
       [],

@@ -81,10 +81,10 @@ export class EditActionComponent implements OnInit,AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.editActionErrorText !== null && this.editActionErrorText == res.data.message) {
+            if (this.editActionErrorText !== null && this.editActionErrorText == res.message) {
               this.editActionFailedCounter++;
             }
-            this.editActionErrorText = res.data.message;
+            this.editActionErrorText = res.message;
 
           } else {
             this.editActionForm.reset();

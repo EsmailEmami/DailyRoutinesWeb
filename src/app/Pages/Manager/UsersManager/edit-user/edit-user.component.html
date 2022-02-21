@@ -50,9 +50,6 @@
           <label>شماره تلفن</label>
 
           <span *ngIf="editUserForm.controls.phoneNumber.touched">
-          <p *ngIf="editUserForm.controls.phoneNumber.errors?.required">
-            لطفا شماره تلفن را وارد کنید
-          </p>
           <p *ngIf="editUserForm.controls.phoneNumber.errors?.maxlength">
              لطفا شماره تلفن را به درستی وارد کنید
           </p>

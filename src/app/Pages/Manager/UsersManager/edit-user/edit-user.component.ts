@@ -35,7 +35,6 @@ export class EditUserComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
     if (this.userId == null) {
       this.activeModal.dismiss('متاسفانه مشکلی پیش آمده است! لطفا دوباره تلاش کنید.');
     }
@@ -70,7 +69,6 @@ export class EditUserComponent implements OnInit, AfterViewInit {
           phoneNumber: new FormControl(
             response.data.phoneNumber,
             [
-              Validators.required,
               Validators.maxLength(12)
             ]
           ),
@@ -108,10 +106,6 @@ export class EditUserComponent implements OnInit, AfterViewInit {
         selectedRoles = this.editUserForm.controls.roles.value;
       }
 
-
-
-      debugger;
-
       this.editUserSniper = true;
 
       const userData = new EditUserDTO(
@@ -129,10 +123,10 @@ export class EditUserComponent implements OnInit, AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.editUserErrorText !== null && this.editUserErrorText == res.data.message) {
+            if (this.editUserErrorText !== null && this.editUserErrorText == res.message) {
               this.editUserFailedCounter++;
             }
-            this.editUserErrorText = res.data.message;
+            this.editUserErrorText = res.message;
 
           } else {
             this.editUserForm.reset();

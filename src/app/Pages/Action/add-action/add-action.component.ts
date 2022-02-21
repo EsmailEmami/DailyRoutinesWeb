@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AddActionDTO} from "../../../DTOs/Routine/AddActionDTO";
@@ -94,10 +94,10 @@ export class AddActionComponent implements OnInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.newActionErrorText !== null && this.newActionErrorText == res.data.message) {
+            if (this.newActionErrorText !== null && this.newActionErrorText == res.message) {
               this.newActionFailedCounter++;
             }
-            this.newActionErrorText = res.data.message;
+            this.newActionErrorText = res.message;
 
           } else {
             this.newActionForm.reset();

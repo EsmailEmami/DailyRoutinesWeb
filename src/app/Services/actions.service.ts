@@ -1,6 +1,5 @@
-import {Params} from '@angular/router';
-import {FilterActionsDTO} from './../DTOs/Routine/FilterActionsDTO';
-import {IResponseResult} from './../DTOs/Common/IResponseResult';
+import {FilterActionsDTO} from '../DTOs/Routine/FilterActionsDTO';
+import {IResponseResult} from '../DTOs/Common/IResponseResult';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
@@ -90,4 +89,5 @@ export class ActionsService {
   getYearsOfActions(): Observable<IResponseResult<number[]>> {
     return this.http.get<IResponseResult<number[]>>('/actions/YearsOfActions');
   }
+
 }

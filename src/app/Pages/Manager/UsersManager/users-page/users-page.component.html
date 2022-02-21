@@ -12,6 +12,7 @@
       <h2 class="info">کاربران</h2>
 
       <div>
+        <button class="site-btn success" (click)="addUser()">کاربر جدید</button>
         <button class="site-btn warning" (click)="showUsersFilterItems()">فیلتر</button>
       </div>
     </div>
@@ -55,9 +56,13 @@
           <td>
             <button class="site-btn warning" (click)="editUser(item.userId)">ویرایش
             </button>
-            <button *ngIf="!item.isBlock" class="site-btn danger" (click)="blockUser(item.userId,item.fullName)">مسدود کردن
+            <button class="site-btn info" [routerLink]="['/Manager/Users/',item.userId]">جزئیات
             </button>
-            <button *ngIf="item.isBlock" class="site-btn success" (click)="activeUser(item.userId,item.fullName)">فعال کردن
+            <button *ngIf="!item.isBlock" class="site-btn danger" (click)="blockUser(item.userId,item.fullName)">مسدود
+              کردن
+            </button>
+            <button *ngIf="item.isBlock" class="site-btn success" (click)="activeUser(item.userId,item.fullName)">فعال
+              کردن
             </button>
           </td>
         </tr>

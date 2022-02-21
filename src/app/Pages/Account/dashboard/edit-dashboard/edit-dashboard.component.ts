@@ -77,10 +77,10 @@ export class EditDashboardComponent implements OnInit, AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.editDashboardErrorText !== null && this.editDashboardErrorText == res.data.message) {
+            if (this.editDashboardErrorText !== null && this.editDashboardErrorText == res.message) {
               this.editDashboardFailedCounter++;
             }
-            this.editDashboardErrorText = res.data.message;
+            this.editDashboardErrorText = res.message;
 
           } else {
             this.editDashboardForm.reset();

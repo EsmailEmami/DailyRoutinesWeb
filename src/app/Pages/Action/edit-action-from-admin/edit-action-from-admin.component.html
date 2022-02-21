@@ -1,0 +1,69 @@
+<div class="modal-header-custom">
+  <h2 class="header-title">ویرایش فعالیت {{editActionForm.controls.actionTitle.value}}</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="editActionForm" (ngSubmit)="submitEditActionForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ editActionErrorText }}
+      {{ editActionFailedCounter <= 1 ? "" : "( " + editActionFailedCounter + " )" }}
+    </p>
+
+    <div class="form-fill">
+      <input type="text" formControlName="actionTitle"/>
+      <label>عنوان فعالیت</label>
+
+      <span *ngIf="editActionForm.controls.actionTitle.touched">
+          <p *ngIf="editActionForm.controls.actionTitle.errors?.required">
+            لطفا عنوان فعالیت را وارد کنید
+          </p>
+          <p *ngIf="editActionForm.controls.actionTitle.errors?.maxlength">
+            عنوان فعالیت وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+
+    <div class="form-fill">
+      <textarea type="text" formControlName="actionDescription"></textarea>
+      <label>توضیحات</label>
+
+      <span *ngIf="editActionForm.controls.actionDescription.touched">
+          <p *ngIf="editActionForm.controls.actionDescription.errors?.required">
+            لطفا توضیحات فعالیت را وارد کنید
+          </p>
+          <p *ngIf="editActionForm.controls.actionDescription.errors?.maxlength">
+            توضیحات فعالیت وارد شده نمیتواند بیشتر از 3000 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="editActionForm.invalid"
+          type="submit"
+          class="{{ editActionSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()"
+        >
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+

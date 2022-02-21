@@ -10,6 +10,7 @@ import {UsersService} from "../../../../Services/users.service";
 import {FilterUsersDTO} from "../../../../DTOs/Users/FilterUsersDTO";
 import {EditCategoryComponent} from "../../../Category/edit-category/edit-category.component";
 import {EditUserComponent} from "../edit-user/edit-user.component";
+import {AddUserComponent} from "../add-user/add-user.component";
 
 declare function selectDropdown(): any;
 
@@ -178,6 +179,29 @@ export class UsersPageComponent implements OnInit, AfterViewInit {
   editUser(userId: string) {
     const modalRef = this.modalService.open(EditUserComponent);
     modalRef.componentInstance.userId = userId;
+
+    modalRef.result.then((result: string) => {
+      if (result) {
+        this.Toast.fire({
+          icon: 'success',
+          title: result
+        });
+
+        this.getUsers();
+      }
+    }).catch(e => {
+      if (e) {
+        this.Toast.fire({
+          icon: 'warning',
+          title: e
+        });
+      }
+    });
+  }
+
+
+  addUser() {
+    const modalRef = this.modalService.open(AddUserComponent);
 
     modalRef.result.then((result: string) => {
       if (result) {

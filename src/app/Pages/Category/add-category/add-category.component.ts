@@ -53,10 +53,10 @@ export class AddCategoryComponent implements OnInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.newCategoryErrorText !== null && this.newCategoryErrorText == res.data.message) {
+            if (this.newCategoryErrorText !== null && this.newCategoryErrorText == res.message) {
               this.newCategoryFailedCounter++;
             }
-            this.newCategoryErrorText = res.data.message;
+            this.newCategoryErrorText = res.message;
 
           } else {
             this.newCategoryForm.reset();

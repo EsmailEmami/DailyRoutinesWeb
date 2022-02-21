@@ -70,10 +70,10 @@ export class EditRoleComponent implements OnInit, AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.editRoleErrorText !== null && this.editRoleErrorText == res.data.message) {
+            if (this.editRoleErrorText !== null && this.editRoleErrorText == res.message) {
               this.editRoleFailedCounter++;
             }
-            this.editRoleErrorText = res.data.message;
+            this.editRoleErrorText = res.message;
 
           } else {
             this.editRoleForm.reset();

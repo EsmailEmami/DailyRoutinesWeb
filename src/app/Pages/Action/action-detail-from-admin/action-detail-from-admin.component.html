@@ -1,0 +1,23 @@
+<div class="modal-header-custom">
+  <h2 class="header-title">ویرایش فعالیت {{actionDetail.actionTitle}}</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+
+<div class="modal-body-custom">
+  {{actionDetail.actionTitle}}
+</div>
+
+<div class="modal-footer-custom">
+  <div class="text-center">
+    <button
+      type="button"
+      class="site-btn warning w-50"
+      (click)="closeModal()">
+      <span>خروج</span>
+    </button>
+  </div>
+</div>
+
+
+

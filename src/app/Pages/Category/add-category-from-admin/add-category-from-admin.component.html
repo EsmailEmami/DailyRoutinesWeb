@@ -1,0 +1,55 @@
+<div class="modal-header-custom">
+  <h2 class="header-title">افزودن دسته بندی</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="newCategoryForm" (ngSubmit)="submitNewCategoryForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ newCategoryErrorText }}
+      {{ newCategoryFailedCounter <= 1 ? "" : "( " + newCategoryFailedCounter + " )" }}
+    </p>
+
+    <div class="form-fill">
+      <input type="text" formControlName="categoryTitle"/>
+      <label>عنوان دسته بندی</label>
+
+      <span *ngIf="newCategoryForm.controls.categoryTitle.touched">
+          <p *ngIf="newCategoryForm.controls.categoryTitle.errors?.required">
+            لطفا عنوان دسته بندی را وارد کنید
+          </p>
+          <p *ngIf="newCategoryForm.controls.categoryTitle.errors?.maxlength">
+            عنوان دسته بندی وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          </p>
+        </span>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="newCategoryForm.invalid"
+          type="submit"
+          class="{{ newCategorySniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()"
+        >
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+

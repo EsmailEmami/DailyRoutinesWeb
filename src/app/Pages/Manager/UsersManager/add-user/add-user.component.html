@@ -1,1 +1,150 @@
-<p>add-user works!</p>
+<div class="modal-header-custom">
+  <h2 class="header-title">افزودن کاربر</h2>
+  <span class="close" (click)="closeModal()">&times;</span>
+</div>
+
+<form [formGroup]="addUserForm" (ngSubmit)="submitAddUserForm()">
+  <div class="modal-body-custom">
+    <p class="text-danger">
+      {{ addUserErrorText }}
+      {{ addUserFailedCounter <= 1 ? "" : "( " + addUserFailedCounter + " )" }}
+    </p>
+    <div class="row">
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" formControlName="firstName"/>
+          <label>نام</label>
+
+          <span *ngIf="addUserForm.controls.firstName.touched">
+          <p *ngIf="addUserForm.controls.firstName.errors?.required">
+            لطفا نام را وارد کنید
+          </p>
+          <p *ngIf="addUserForm.controls.firstName.errors?.maxlength">
+            نام وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          </p>
+        </span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" formControlName="lastName"/>
+          <label>نام خانوادگی</label>
+
+          <span *ngIf="addUserForm.controls.lastName.touched">
+          <p *ngIf="addUserForm.controls.lastName.errors?.required">
+            لطفا نام خانوادگی را وارد کنید
+          </p>
+          <p *ngIf="addUserForm.controls.lastName.errors?.maxlength">
+            نام خانوادگی وارد شده نمیتواند بیشتر از 50 کاراکتر باشد
+          </p>
+        </span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" class="left" formControlName="phoneNumber"/>
+          <label>شماره تلفن</label>
+
+          <span *ngIf="addUserForm.controls.phoneNumber.touched">
+          <p *ngIf="addUserForm.controls.phoneNumber.errors?.maxlength">
+             لطفا شماره تلفن را به درستی وارد کنید
+          </p>
+        </span>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+        <div class="form-fill">
+          <input type="text" class="left" formControlName="email" email/>
+          <label>ایمیل</label>
+
+          <span *ngIf="addUserForm.controls.email.touched">
+              <p *ngIf="addUserForm.controls.email.errors?.required">
+              لطفا ایمیل را وارد کنید
+            </p>
+              <p *ngIf="addUserForm.controls.email.errors?.maxlength">
+              ایمیل وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+               <p *ngIf="addUserForm.controls.email.errors?.email">
+             لطفا ایمیل را درست وارد کنید
+            </p>
+           </span>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <select formControlName="roles" multiple placeholder="مقام ها">
+          <option *ngFor="let role of roles" [value]="role.value">{{role.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+
+        <div class="form-fill">
+          <input type="password" tabindex="4" class="left" formControlName="password"/>
+          <label>رمز عبور</label>
+
+          <span *ngIf="addUserForm.controls.password.touched">
+              <p *ngIf="addUserForm.controls.password.errors?.required">
+              لطفا رمز عبور را وارد کنید
+            </p>
+              <p *ngIf="addUserForm.controls.password.errors?.maxlength">
+              رمز عبور وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+           </span>
+        </div>
+
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+
+        <div class="form-fill">
+          <input type="password" tabindex="5" class="left" formControlName="confirmPassword"/>
+          <label>تکرار رمز عبور</label>
+
+
+          <span *ngIf="addUserForm.controls.confirmPassword.touched">
+              <p *ngIf="addUserForm.controls.confirmPassword.errors?.required">
+              لطفا تکرار رمز عبور را وارد کنید
+            </p>
+              <p *ngIf="addUserForm.controls.confirmPassword.errors?.maxlength">
+              تکرار رمز عبور وارد شده نمیتواند بیشتر از 100 کاراکتر باشد
+            </p>
+           </span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer-custom">
+    <div class="row">
+
+      <div class="col-6">
+        <button
+          [disabled]="addUserForm.invalid"
+          type="submit"
+          class="{{ addUserSniper ? 'button-loading' : '' }}"
+        >
+          <span>ثبت</span>
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="site-btn warning"
+          (click)="closeModal()">
+          <span>خروج</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</form>
+
+

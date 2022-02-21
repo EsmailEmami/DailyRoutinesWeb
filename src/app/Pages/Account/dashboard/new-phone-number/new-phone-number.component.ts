@@ -55,10 +55,10 @@ export class NewPhoneNumberComponent implements OnInit, AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.newPhoneNumberErrorText !== null && this.newPhoneNumberErrorText == res.data.message) {
+            if (this.newPhoneNumberErrorText !== null && this.newPhoneNumberErrorText == res.message) {
               this.newPhoneNumberFailedCounter++;
             }
-            this.newPhoneNumberErrorText = res.data.message;
+            this.newPhoneNumberErrorText = res.message;
 
           } else {
             this.newPhoneNumberForm.reset();

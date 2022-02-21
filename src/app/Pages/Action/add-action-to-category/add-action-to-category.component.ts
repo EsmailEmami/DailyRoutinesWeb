@@ -68,10 +68,10 @@ export class AddActionToCategoryComponent implements OnInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.newActionErrorText !== null && this.newActionErrorText == res.data.message) {
+            if (this.newActionErrorText !== null && this.newActionErrorText == res.message) {
               this.newActionFailedCounter++;
             }
-            this.newActionErrorText = res.data.message;
+            this.newActionErrorText = res.message;
 
           } else {
             this.newActionForm.reset();

@@ -4,7 +4,6 @@ import {Observable} from "rxjs";
 import {IResponseResult} from "../DTOs/Common/IResponseResult";
 import {AddRoleDTO} from "../DTOs/Access/AddRoleDTO";
 import {EditRoleDTO} from "../DTOs/Access/EditRoleDTO";
-import {FilterCategoriesDTO} from "../DTOs/Routine/FilterCategoriesDTO";
 import {FilterRolesDTO} from "../DTOs/Access/FilterRolesDTO";
 import {ItemsForSelectDTO} from "../DTOs/Common/ItemsForSelectDTO";
 
@@ -51,5 +50,32 @@ export class AccessService {
 
   getRolesForSelect(): Observable<IResponseResult<ItemsForSelectDTO[]>> {
     return this.http.get<IResponseResult<ItemsForSelectDTO[]>>('/AccessManager/RolesForSelect');
+  }
+
+  getUserRoles(userId: string, filter: FilterRolesDTO): Observable<IResponseResult<FilterRolesDTO>> {
+
+    if (filter.search == null) {
+      filter.search = '';
+    }
+
+    const params = new HttpParams()
+      .set('userId', userId)
+      .set('pageId', filter.pageId)
+      .set('search', filter.search)
+      .set('takeEntity', filter.takeEntity)
+
+
+    return this.http.get<IResponseResult<FilterRolesDTO>>('/AccessManager/UserRoles', {
+      params: params
+    });
+  }
+
+  deleteRoleFromUser(userId: string, roleId: string): Observable<IResponseResult<any>> {
+    return this.http.delete<IResponseResult<any>>('/AccessManager/DeleteRoleFromUser', {
+      params: {
+        userID: userId,
+        roleId: roleId
+      }
+    });
   }
 }

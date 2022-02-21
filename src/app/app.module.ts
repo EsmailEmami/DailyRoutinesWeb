@@ -56,10 +56,28 @@ import {
 import {LoadingBarRouterModule} from "@ngx-loading-bar/router";
 import {LOADING_BAR_CONFIG, LoadingBarModule} from "@ngx-loading-bar/core";
 import {LoadingBarHttpClientModule} from "@ngx-loading-bar/http-client";
-import { HideNumberPipe } from './Pipe/hide-number.pipe';
-import { HideLengthPipe } from './Pipe/hide-length.pipe';
+import {HideNumberPipe} from './Pipe/hide-number.pipe';
+import {HideLengthPipe} from './Pipe/hide-length.pipe';
 import {AccessService} from "./Services/access.service";
-import { AdminUsersComponent } from './Pages/Manager/UsersManager/admin-users/admin-users.component';
+import {AdminUsersComponent} from './Pages/Manager/UsersManager/admin-users/admin-users.component';
+import {AddActionFromAdminComponent} from './Pages/Action/add-action-from-admin/add-action-from-admin.component';
+import {
+  AddActionToCategoryFromAdminComponent
+} from './Pages/Action/add-action-to-category-from-admin/add-action-to-category-from-admin.component';
+import {EditActionFromAdminComponent} from './Pages/Action/edit-action-from-admin/edit-action-from-admin.component';
+import {
+  AddCategoryFromAdminComponent
+} from './Pages/Category/add-category-from-admin/add-category-from-admin.component';
+import {
+  EditCategoryFromAdminComponent
+} from './Pages/Category/edit-category-from-admin/edit-category-from-admin.component';
+import {
+  ActionDetailFromAdminComponent
+} from './Pages/Action/action-detail-from-admin/action-detail-from-admin.component';
+import {ActionsManagerService} from "./Services/actions-manager.service";
+import {CategoriesManagerService} from "./Services/categories-manager.service";
+import { UserCategoriesForAdminComponent } from './Pages/Manager/UsersManager/user-detail/user-categories-for-admin/user-categories-for-admin.component';
+import { UserFullCategoryDetailForAdminComponent } from './Pages/Manager/UsersManager/user-full-category-detail-for-admin/user-full-category-detail-for-admin.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +121,15 @@ import { AdminUsersComponent } from './Pages/Manager/UsersManager/admin-users/ad
     UserCategoriesRecycleBinComponent,
     HideNumberPipe,
     HideLengthPipe,
-    AdminUsersComponent
+    AdminUsersComponent,
+    AddActionFromAdminComponent,
+    AddActionToCategoryFromAdminComponent,
+    EditActionFromAdminComponent,
+    AddCategoryFromAdminComponent,
+    EditCategoryFromAdminComponent,
+    ActionDetailFromAdminComponent,
+    UserCategoriesForAdminComponent,
+    UserFullCategoryDetailForAdminComponent
   ],
   imports: [
     BrowserModule,
@@ -132,7 +158,9 @@ import { AdminUsersComponent } from './Pages/Manager/UsersManager/admin-users/ad
     UsersService,
     CategoriesService,
     ActionsService,
-    AccessService
+    AccessService,
+    ActionsManagerService,
+    CategoriesManagerService
   ],
   bootstrap: [AppComponent]
 })

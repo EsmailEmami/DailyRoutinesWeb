@@ -70,10 +70,10 @@ export class EditCategoryComponent implements OnInit, AfterViewInit {
 
           if (res.status === ResponseResultStatusType.Error) {
 
-            if (this.editCategoryErrorText !== null && this.editCategoryErrorText == res.data.message) {
+            if (this.editCategoryErrorText !== null && this.editCategoryErrorText == res.message) {
               this.editCategoryFailedCounter++;
             }
-            this.editCategoryErrorText = res.data.message;
+            this.editCategoryErrorText = res.message;
 
           } else {
             this.editCategoryForm.reset();
