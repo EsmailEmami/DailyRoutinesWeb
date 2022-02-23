@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {IResponseResult} from "../DTOs/Common/IResponseResult";
 import {FilterCategoriesDTO} from "../DTOs/Routine/FilterCategoriesDTO";
 import {CategoryDetailDTO} from "../DTOs/Routine/CategoryDetailDTO";
@@ -43,8 +43,7 @@ export class CategoriesService {
     this.currentCategoriesDetail.push(data);
   }
 
-  getCurrentCategoryDetail(categoryId: string): CategoryDetailDTO | null {
-
+  getCurrentCategoryDetail(categoryId: string): Observable<CategoryDetailDTO> | null {
 
     let data = this.currentCategoriesDetail.find(c => c.categoryId === categoryId);
 
@@ -52,7 +51,7 @@ export class CategoriesService {
       return null;
     }
 
-    return data;
+    return of(data);
   }
 
   //********************** current categories detail **********************//

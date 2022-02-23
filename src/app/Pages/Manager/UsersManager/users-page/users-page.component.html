@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="select-box col-xs-12 col-sm-4">
-          <select [(ngModel)]="users.type" (change)="updateUsers()">
+          <select set [(ngModel)]="users.type" (change)="updateUsers()">
             <option [value]="'all'">همه</option>
             <option [value]="'active'">فعال</option>
             <option [value]="'blocked'">مسدود شده</option>

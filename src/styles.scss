@@ -430,6 +430,11 @@ button[type=submit] {
   &:disabled {
     background: rgba(var(--color-primary-rgb), 0.85);
   }
+}
+
+button{
+  position: relative;
+  outline: none;
 
   &.button-loading {
     pointer-events: none;

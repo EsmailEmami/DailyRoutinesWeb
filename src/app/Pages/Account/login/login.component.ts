@@ -91,8 +91,10 @@ export class LoginComponent implements OnInit {
               authenticationCookieName,
               res.data.token,
               res.data.expireTime,
+              '',
+              undefined,
+              true
             );
-
 
             const currentUser = new CurrentUser(
               res.data.userId,
@@ -122,7 +124,6 @@ export class LoginComponent implements OnInit {
 
 
             if (this.activatedRoute.snapshot.queryParams['redirect'] != null) {
-
               this.router.navigate([this.activatedRoute.snapshot.queryParams['redirect']]);
             } else {
               this.router.navigate(['']);

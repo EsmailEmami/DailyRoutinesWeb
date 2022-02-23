@@ -5,14 +5,17 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from "@angular/router";
-import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
-import { AuthenticationService } from "src/app/Services/authentication.service";
+import {catchError, Observable, of} from "rxjs";
+import {Injectable} from "@angular/core";
+import {AuthenticationService} from "src/app/Services/authentication.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotUserAuthenticationGuard implements CanActivate {
+
+  private resultValue: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -21,15 +24,19 @@ export class NotUserAuthenticationGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authenticationService.isAuthenticated().then(res => {
+    return this.authenticationService.isAuthenticated().pipe(map((response) => {
+      if (response) {
+        this.router.navigate(['']).then();
 
-      if (res == true) {
-        this.router.navigate(['']);
-      } else {
-        return true;
+        return false;
       }
 
-      return false;
-    });
+      return true;
+
+    }), catchError((error) => {
+      this.router.navigate(['']).then();
+      return of(false);
+    }));
+
   }
 }

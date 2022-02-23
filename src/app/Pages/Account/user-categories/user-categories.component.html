@@ -4,10 +4,6 @@
 
 <div class="content-main">
 
-  <div *ngIf="categories == null" class="text-center">
-    Categories NotFound
-  </div>
-
   <div class="text-center" data-aos="flip-left">
     <h1 class="title">دسته بندی های شما</h1>
   </div>
@@ -32,7 +28,7 @@
           </div>
         </div>
         <div class="select-box col-xs-12 col-sm-4">
-          <select [(ngModel)]="categories.orderBy" (change)="updateCategories()">
+          <select set [(ngModel)]="categories.orderBy" (change)="updateCategories()">
             <option value="CreateDate">تاریخ ثبت</option>
             <option value="UpdateDate">آخرین ویرایش</option>
           </select>
@@ -56,7 +52,9 @@
           <td>{{item.categoryTitle}}</td>
           <td>{{item.lastUpdateDate}}</td>
           <td>
-            <button class="site-btn info" (click)="ShowCategoryDetail(item.categoryId)">جزئیات
+            <button class="site-btn info" [id]="'btn-detail-'+item.categoryId"
+                    (click)="ShowCategoryDetail(item.categoryId,'btn-detail-'+ item.categoryId)">
+              <span>جزئیات</span>
             </button>
             <button class="site-btn success" [routerLink]="['/Account/Categories',item.categoryId]">باز کردن
             </button>
@@ -84,10 +82,9 @@
 
     </ul>
 
+    <div *ngIf="loader" class="preloader"></div>
   </div>
 
-
-  <div *ngIf="loader" class="preloader"></div>
   <router-outlet></router-outlet>
 </div>
 

@@ -36,17 +36,17 @@
 
         <div class="row mt-2">
           <div class="select-box col-xs-12 col-sm-3">
-            <select [(ngModel)]="lastActions.year" (change)="updateSelect('month-section')">
+            <select set [(ngModel)]="lastActions.year" (change)="updateSelect('month-section')">
               <option *ngFor="let year of years" [value]="year.value">{{year.name}}</option>
             </select>
           </div>
           <div class="select-box col-xs-12 col-sm-5" >
-            <select [(ngModel)]="lastActions.month" id="month-section" (change)="updateSelect('month-section')">
+            <select set [(ngModel)]="lastActions.month" id="month-section" (change)="updateSelect('month-section')">
               <option *ngFor="let month of months" [value]="month.value">{{month.name}}</option>
             </select>
           </div>
           <div class="select-box col-xs-12 col-sm-4">
-            <select id="day-section" [(ngModel)]="lastActions.day" (change)="updateSelect('day-section')">
+            <select set id="day-section" [(ngModel)]="lastActions.day" (change)="updateSelect('day-section')">
               <option *ngFor="let day of days" [value]="day.value">{{day.name}}</option>
             </select>
           </div>

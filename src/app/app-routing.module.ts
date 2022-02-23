@@ -10,17 +10,23 @@ import {DashboardComponent} from "./Pages/Account/dashboard/dashboard.component"
 import {NotFoundComponent} from "./SharedComponents/not-found/not-found.component";
 import {NotUserAuthenticationGuard} from './Utilities/Gaurd/NotUserAuthenticationGaurd';
 import {UserCategoryDetailComponent} from "./Pages/Account/user-category-detail/user-category-detail.component";
-import {UserFullCategoryDetailComponent} from "./Pages/Account/user-full-category-detail/user-full-category-detail.component";
+import {
+  UserFullCategoryDetailComponent
+} from "./Pages/Account/user-full-category-detail/user-full-category-detail.component";
 import {UserLastActionsComponent} from "./Pages/Account/user-last-actions/user-last-actions.component";
 import {UserCategoryActionsComponent} from "./Pages/Account/user-category-actions/user-category-actions.component";
 import {UsersPageComponent} from "./Pages/Manager/UsersManager/users-page/users-page.component";
 import {UserDetailComponent} from "./Pages/Manager/UsersManager/user-detail/user-detail.component";
 import {RolesPageComponent} from "./Pages/Manager/AccessManager/roles-page/roles-page.component";
-import {UserCategoriesRecycleBinComponent} from "./Pages/Account/user-categories-recycle-bin/user-categories-recycle-bin.component";
+import {
+  UserCategoriesRecycleBinComponent
+} from "./Pages/Account/user-categories-recycle-bin/user-categories-recycle-bin.component";
 import {AdminUsersComponent} from "./Pages/Manager/UsersManager/admin-users/admin-users.component";
 import {
   UserFullCategoryDetailForAdminComponent
 } from "./Pages/Manager/UsersManager/user-full-category-detail-for-admin/user-full-category-detail-for-admin.component";
+import {UserAuthenticationGuard} from "./Utilities/Gaurd/UserAuthenticationGuard";
+import {CategoryDetailGuard} from "./Utilities/Resolvers/category-detail.guard";
 
 const routes: Routes = [
   {
@@ -40,10 +46,12 @@ const routes: Routes = [
     path: 'Register', component: RegisterComponent,
     data: {
       title: 'ثبت نام در سایت'
-    }
+    },
+    canActivate: [NotUserAuthenticationGuard]
   },
   {
     path: 'Account', component: AccountComponent,
+    canActivate: [UserAuthenticationGuard],
     children: [
       {
         path: '', redirectTo: '/Account/Dashboard', pathMatch: 'full'
@@ -62,6 +70,7 @@ const routes: Routes = [
         children: [
           {
             path: 'Show/:categoryId', component: UserCategoryDetailComponent,
+            resolve: {category: CategoryDetailGuard}
           }
         ]
       },

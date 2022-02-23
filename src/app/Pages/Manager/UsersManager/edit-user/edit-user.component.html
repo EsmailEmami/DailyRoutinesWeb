@@ -77,7 +77,7 @@
       </div>
 
       <div class="col-12">
-        <select formControlName="roles" multiple placeholder="مقام ها">
+        <select set formControlName="roles" multiple placeholder="مقام ها">
           <option *ngFor="let role of roles" [value]="role.value">{{role.name}}</option>
         </select>
       </div>

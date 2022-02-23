@@ -5,9 +5,10 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from "@angular/router";
-import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
-import { AuthenticationService } from "src/app/Services/authentication.service";
+import {catchError, Observable, of} from "rxjs";
+import {Injectable} from "@angular/core";
+import {AuthenticationService} from "src/app/Services/authentication.service";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +22,28 @@ export class UserAuthenticationGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return this.authenticationService.isAuthenticated().then(res => {
-
-
-
-
-      if (res == true) {
+    return this.authenticationService.isAuthenticated().pipe(map((response) => {
+      if (response) {
         return true;
-      } else {
-        this.router.navigate(['Login'], {
-          queryParams: {
-            redirect: state.url
-          }
-        });
       }
+      this.router.navigate(['Login'], {
+        queryParams: {
+          redirect: state.url
+        }
+      });
 
-      return false;
-    });
+      return true;
+
+    }), catchError((error) => {
+
+      this.router.navigate(['Login'], {
+        queryParams: {
+          redirect: state.url
+        }
+      });
+
+      return of(false);
+    }));
+
   }
 }

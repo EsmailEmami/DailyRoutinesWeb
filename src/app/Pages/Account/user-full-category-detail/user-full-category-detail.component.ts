@@ -68,7 +68,12 @@ export class UserFullCategoryDetailComponent implements OnInit {
     this.getLastActions();
     // category detail
 
-    let categoryData = this.categoriesService.getCurrentCategoryDetail(categoryId);
+    let categoryData: CategoryDetailDTO | null = null;
+
+    this.categoriesService.getCurrentCategoryDetail(categoryId)?.subscribe(result => {
+      categoryData = result;
+    });
+
 
     if (categoryData == null) {
       this.getCategory(categoryId);
@@ -76,7 +81,7 @@ export class UserFullCategoryDetailComponent implements OnInit {
       this.loader = false;
 
       this.category = categoryData;
-      this.setBreadCrumbsData(categoryData.categoryTitle, categoryData.categoryId);
+      this.setBreadCrumbsData(this.category.categoryTitle, this.category.categoryId);
     }
 
 

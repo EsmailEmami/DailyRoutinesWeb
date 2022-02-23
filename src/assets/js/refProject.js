@@ -145,6 +145,10 @@ function selectDropdown() {
       return;
     }
 
+    if (!el.hasAttribute('set')) {
+      return;
+    }
+
     // add attr to select that select is done
     el.setAttribute('isDone', '');
 
@@ -272,6 +276,7 @@ function addSelectList(select, selectDropdown, itemValue, itemText) {
   });
   selectDropdown.appendChild(op);
 }
+
 // refresh dropdown
 function selectRefresh(select, dropDown) {
   let optext = dropDown.querySelector('span.optext');
@@ -283,6 +288,7 @@ function selectRefresh(select, dropDown) {
   });
   dropDown.appendChild(c);
 }
+
 function updateSelectDropdown(selectId, values) {
 
   let select = document.getElementById(selectId);
@@ -292,15 +298,18 @@ function updateSelectDropdown(selectId, values) {
   let selectDropDownList = selectDropDown.querySelector('.select-dropdown-list');
   if (values.length > 0) {
     // make empty the select
-    select.querySelectorAll('*').forEach(function (n) { return n.remove(); });
-    selectDropDownList.querySelectorAll('*').forEach(function (n) { return n.remove(); });
+    select.querySelectorAll('*').forEach(function (n) {
+      return n.remove();
+    });
+    selectDropDownList.querySelectorAll('*').forEach(function (n) {
+      return n.remove();
+    });
     values.forEach(function (element) {
       addSelectList(select, selectDropDownList, element.value, element.name);
     });
     selectRefresh(select, selectDropDown);
   }
 }
-
 
 function multiSelectDropdown() {
 
@@ -311,6 +320,10 @@ function multiSelectDropdown() {
     });
 
     if (el.hasAttribute('isDone')) {
+      return;
+    }
+
+    if (!el.hasAttribute('set')) {
       return;
     }
 
@@ -494,4 +507,17 @@ function multiSelectDropdown() {
       }
     });
   });
+}
+
+function setButtonSniper(selector) {
+
+  let btn = document.querySelector(selector);
+
+  btn.classList.add('button-loading');
+}
+
+function removeButtonSniper(selector) {
+  let btn = document.querySelector(selector);
+
+  btn.classList.remove('button-loading');
 }

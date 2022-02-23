@@ -11,7 +11,7 @@
     </p>
     <div class="row">
       <div class="col-sm-12 col-md-6">
-        <select formControlName="category">
+        <select set formControlName="category">
           <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
         </select>
 

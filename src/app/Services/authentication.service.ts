@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { RegisterUserDTO } from "../DTOs/Account/RegisterUserDTO";
-import { BehaviorSubject, Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { LoginUserDTO } from "../DTOs/Account/LoginUserDTO";
-import { ILoginUserAccount } from "../DTOs/Account/ILoginUserAccount";
-import { CurrentUser } from "../DTOs/Account/CurrentUser";
-import { ICheckUserAuthentication } from "../DTOs/Account/ICheckUserAuthentication";
-import { CookieService } from "ngx-cookie-service";
-import { authenticationCookieName } from "../Utilities/CookieTools";
+import {Injectable} from '@angular/core';
+import {RegisterUserDTO} from "../DTOs/Account/RegisterUserDTO";
+import {BehaviorSubject, Observable, of} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {LoginUserDTO} from "../DTOs/Account/LoginUserDTO";
+import {ILoginUserAccount} from "../DTOs/Account/ILoginUserAccount";
+import {CurrentUser} from "../DTOs/Account/CurrentUser";
+import {ICheckUserAuthentication} from "../DTOs/Account/ICheckUserAuthentication";
+import {CookieService} from "ngx-cookie-service";
+import {authenticationCookieName} from "../Utilities/CookieTools";
+import {map} from "rxjs/operators";
+import {ResponseResultStatusType} from "../Utilities/Enums/ResponseResultStatusType";
 
 @Injectable({
   providedIn: 'root'
@@ -17,30 +19,47 @@ export class AuthenticationService {
   // @ts-ignore
   private currentUser: BehaviorSubject<CurrentUser> = new BehaviorSubject<CurrentUser>(null);
 
-  private isLogin: boolean = false;
+  private _authenticateChecked: boolean = false;
+  private _isLogin: boolean = false;
 
   constructor(private http: HttpClient,
-    private cookieService: CookieService) {
+              private cookieService: CookieService) {
   }
 
   setCurrentUser(user: CurrentUser): void {
     this.currentUser.next(user);
 
-    if (user != null) {
-      this.isLogin = true;
-    } else {
-      this.isLogin = false;
-    }
+    this._authenticateChecked = true;
+
+    this._isLogin = user != null;
   }
 
   getCurrentUser(): Observable<CurrentUser> {
     return this.currentUser;
   }
 
-  isAuthenticated(): Promise<boolean> {
-    return new Promise<boolean>((resolve): void => {
-      resolve(this.isLogin);
-    });
+  isAuthenticated(): Observable<boolean> {
+
+    if (!this._authenticateChecked) {
+      return this.CheckUserAuthentication().pipe(
+        map((response) => {
+          if (response.status == ResponseResultStatusType.Success) {
+            const currentUser: CurrentUser = new CurrentUser(
+              response.data.userId,
+              response.data.firstName,
+              response.data.lastName
+            );
+            this.setCurrentUser(currentUser);
+
+            return true;
+          } else {
+            return false;
+          }
+        })
+      );
+    } else {
+      return of(this._isLogin);
+    }
   }
 
   registerUser(registerData: RegisterUserDTO): Observable<any> {
@@ -55,7 +74,7 @@ export class AuthenticationService {
     return this.http.post<ICheckUserAuthentication>('/account/CheckUserAuthentication', null);
   }
 
-  LogOutUser():void {
+  LogOutUser(): void {
     this.cookieService.delete(authenticationCookieName);
   }
 }

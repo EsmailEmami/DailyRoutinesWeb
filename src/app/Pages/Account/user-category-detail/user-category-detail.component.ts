@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CommonTools} from "../../../Utilities/CommonTools";
 import {CategoriesService} from "../../../Services/categories.service";
 import {CategoryDetailDTO} from "../../../DTOs/Routine/CategoryDetailDTO";
@@ -7,6 +7,7 @@ import {ResponseResultStatusType} from "../../../Utilities/Enums/ResponseResultS
 import Swal from "sweetalert2";
 import {UserCategoriesComponent} from "../user-categories/user-categories.component";
 
+declare function removeButtonSniper(selector: string): any;
 
 @Component({
   selector: 'app-user-category-detail',
@@ -49,7 +50,7 @@ export class UserCategoryDetailComponent implements OnInit {
         this.router.navigate(['NotFound']);
       }
 
-      this.getCategoryDetail(this.categoryId);
+      this.getCategoryDetail();
     });
   }
 
@@ -96,29 +97,15 @@ export class UserCategoryDetailComponent implements OnInit {
     })
   }
 
-  getCategoryDetail(categoryId: string): void {
+  getCategoryDetail(): void {
 
-    let data = this.categoriesService.getCurrentCategoryDetail(categoryId);
-
-    if (data == null) {
-      this.categoriesService.getCategory(categoryId).subscribe(res => {
-
-        this.loader = false;
-
-        if (res.status == ResponseResultStatusType.Success) {
-          this.category = res.data;
-
-          this.categoriesService.setCurrentCategoryDetail(res.data);
-
-        } else {
-          this.router.navigate(['NotFound']);
-        }
+    this.activatedRoute.data.subscribe((data: Data) => {
+      this.category = data['category'];
       });
-    } else {
-      this.loader = false;
 
-      this.category = data;
-    }
+    removeButtonSniper(`#btn-detail-${this.categoryId}`);
+
+    this.loader = false;
   }
 
 }

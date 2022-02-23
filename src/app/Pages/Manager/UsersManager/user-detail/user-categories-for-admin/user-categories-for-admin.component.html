@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="select-box col-xs-12 col-sm-4">
-        <select [(ngModel)]="categories.orderBy" (change)="updateCategories()">
+        <select set [(ngModel)]="categories.orderBy" (change)="updateCategories()">
           <option value="CreateDate">تاریخ ثبت</option>
           <option value="UpdateDate">آخرین ویرایش</option>
         </select>

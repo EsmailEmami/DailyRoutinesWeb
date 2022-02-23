@@ -1,10 +1,10 @@
-import { ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from "./Services/authentication.service";
-import { CurrentUser } from "./DTOs/Account/CurrentUser";
-import { Title } from '@angular/platform-browser';
-import { filter, map } from 'rxjs/operators';
+import {ActivatedRoute, NavigationEnd} from '@angular/router';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "./Services/authentication.service";
+import {CurrentUser} from "./DTOs/Account/CurrentUser";
+import {Title} from '@angular/platform-browser';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -21,17 +21,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.CheckUserAuthentication().subscribe(res => {
+    this.authenticationService.isAuthenticated().subscribe(res => {
+        if (!res) {
+          this.authenticationService.CheckUserAuthentication().subscribe(res => {
 
-      if (res.status === 'Success') {
-        const currentUser: CurrentUser = new CurrentUser(
-          res.data.userId,
-          res.data.firstName,
-          res.data.lastName
-        );
-        this.authenticationService.setCurrentUser(currentUser);
+            if (res.status === 'Success') {
+              const currentUser: CurrentUser = new CurrentUser(
+                res.data.userId,
+                res.data.firstName,
+                res.data.lastName
+              );
+              this.authenticationService.setCurrentUser(currentUser);
+            }
+          });
+        }
       }
-    });
+    )
 
 
     this.router.events

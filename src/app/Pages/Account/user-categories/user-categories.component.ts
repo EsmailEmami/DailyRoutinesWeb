@@ -12,6 +12,8 @@ import {AddCategoryComponent} from "../../Category/add-category/add-category.com
 
 declare function selectDropdown(): any;
 
+declare function setButtonSniper(selector: string): any;
+
 @Component({
   selector: 'app-user-categories',
   templateUrl: './user-categories.component.html',
@@ -124,7 +126,10 @@ export class UserCategoriesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ShowCategoryDetail(categoryId: string) {
+  ShowCategoryDetail(categoryId: string, btnId: string): void {
+
+    setButtonSniper(`#${btnId}`)
+
     this.router.navigate(['/Account/Categories/Show', categoryId], {
       queryParams: {
         pageId: this.categories.activePage,
@@ -135,8 +140,10 @@ export class UserCategoriesComponent implements OnInit, AfterViewInit {
   }
 
   getCategories(): void {
+    this.loader = true;
+
     this.categoriesService.getUserCategories(this.categories).subscribe(res => {
-      this.loader = false;
+
       if (res.status == ResponseResultStatusType.Success) {
         this.categories = res.data;
         this.pages = [];
@@ -144,6 +151,10 @@ export class UserCategoriesComponent implements OnInit, AfterViewInit {
           this.pages.push(i);
         }
       }
+
+      this.loader = false;
     });
+
+
   }
 }
