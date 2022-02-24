@@ -52,6 +52,8 @@ export class UserCategoryDetailComponent implements OnInit {
 
       this.getCategoryDetail();
     });
+
+    this.loader = false;
   }
 
 
@@ -102,10 +104,7 @@ export class UserCategoryDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe((data: Data) => {
       this.category = data['category'];
       });
-
     removeButtonSniper(`#btn-detail-${this.categoryId}`);
-
-    this.loader = false;
   }
 
 }

@@ -26,7 +26,6 @@ export class CategoryDetailGuard implements Resolve<CategoryDetailDTO | null> {
     }
 
     return this.categoriesService.getCategory(categoryId as string).pipe(
-      delay(5000),
       map(result => {
         if (result.status != ResponseResultStatusType.Success) {
 

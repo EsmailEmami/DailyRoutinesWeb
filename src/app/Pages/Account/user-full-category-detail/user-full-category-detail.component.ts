@@ -2,7 +2,7 @@ import {GenerateDTO} from '../../../Utilities/Generator/GenerateDTO';
 import {FilterActionsDTO} from '../../../DTOs/Routine/FilterActionsDTO';
 import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../../../Services/categories.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CategoryDetailDTO} from "../../../DTOs/Routine/CategoryDetailDTO";
 import {ResponseResultStatusType} from "../../../Utilities/Enums/ResponseResultStatusType";
 import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../DTOs/breadCrumbs/breadCrumbsResponse";
@@ -14,6 +14,7 @@ import {ActionDetailComponent} from "../../Action/action-detail/action-detail.co
 import {EditCategoryComponent} from "../../Category/edit-category/edit-category.component";
 import {AddActionToCategoryComponent} from "../../Action/add-action-to-category/add-action-to-category.component";
 import {ActionsDateFilter} from "../../../DTOs/Routine/ActionsDateFilter";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-full-category-detail',
@@ -76,7 +77,7 @@ export class UserFullCategoryDetailComponent implements OnInit {
 
 
     if (categoryData == null) {
-      this.getCategory(categoryId);
+      this.getCategory();
     } else {
       this.loader = false;
 
@@ -193,7 +194,7 @@ export class UserFullCategoryDetailComponent implements OnInit {
           title: result
         });
 
-        this.getCategory(this.category.categoryId);
+        this.updateCategory();
       }
     }).catch(e => {
       if (e) {
@@ -205,17 +206,29 @@ export class UserFullCategoryDetailComponent implements OnInit {
     });
   }
 
-  getCategory(categoryId: string) {
+  getCategory() {
     this.loader = true;
 
-    this.categoriesService.getCategory(categoryId).subscribe(res => {
+    this.activatedRoute.data.subscribe((data: Data) => {
+      this.category = data['category'];
+
       this.loader = false;
-      if (res.status == ResponseResultStatusType.Success) {
-        this.category = res.data;
-        this.setBreadCrumbsData(res.data.categoryTitle, res.data.categoryId);
-        this.categoriesService.setCurrentCategoryDetail(res.data);
+    });
+  }
+
+  updateCategory() {
+    this.loader = true;
+
+    this.categoriesService.getCategory(this.category.categoryId).subscribe(result => {
+      if (result.status != ResponseResultStatusType.Success) {
+        this.router.navigate(['NotFound']);
+      } else {
+        this.category = result.data;
       }
     });
+
+    this.loader = false;
+
   }
 
   removeCategory(): void {

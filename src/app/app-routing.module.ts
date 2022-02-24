@@ -76,6 +76,7 @@ const routes: Routes = [
       },
       {
         path: 'Categories/:categoryId', component: UserFullCategoryDetailComponent,
+        resolve: {category: CategoryDetailGuard},
         data: {
           title: 'جزئیات دسته بندی'
         }

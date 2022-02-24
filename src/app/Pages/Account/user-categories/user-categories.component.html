@@ -53,10 +53,12 @@
           <td>{{item.lastUpdateDate}}</td>
           <td>
             <button class="site-btn info" [id]="'btn-detail-'+item.categoryId"
-                    (click)="ShowCategoryDetail(item.categoryId,'btn-detail-'+ item.categoryId)">
+                    (click)="ShowCategoryDetail(item.categoryId)">
               <span>جزئیات</span>
             </button>
-            <button class="site-btn success" [routerLink]="['/Account/Categories',item.categoryId]">باز کردن
+            <button class="site-btn success" [id]="'btn-full-detail-'+item.categoryId"
+                    (click)="ShowFullCategoryDetail(item.categoryId)">
+              <span>باز کردن</span>
             </button>
           </td>
         </tr>

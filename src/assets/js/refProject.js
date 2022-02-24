@@ -513,11 +513,15 @@ function setButtonSniper(selector) {
 
   let btn = document.querySelector(selector);
 
-  btn.classList.add('button-loading');
+  if (btn != null){
+    btn.classList.add('button-loading');
+  }
 }
 
 function removeButtonSniper(selector) {
   let btn = document.querySelector(selector);
 
-  btn.classList.remove('button-loading');
+  if (btn != null){
+    btn.classList.remove('button-loading');
+  }
 }
