@@ -9,14 +9,13 @@ import {CommonTools} from "../../../../../Utilities/CommonTools";
 import {ActionsManagerService} from "../../../../../Services/actions-manager.service";
 import {AddActionFromAdminComponent} from "../../../../Action/add-action-from-admin/add-action-from-admin.component";
 import {EditActionFromAdminComponent} from "../../../../Action/edit-action-from-admin/edit-action-from-admin.component";
-import {ActionDetailFromAdminComponent} from "../../../../Action/action-detail-from-admin/action-detail-from-admin.component";
+import {
+  ActionDetailFromAdminComponent
+} from "../../../../Action/action-detail-from-admin/action-detail-from-admin.component";
 
 declare function selectDropdown(): any;
 
 declare function updateSelectDropdown(selectId: string, values: { name: string, value: string | number }[]): any;
-
-interface ngAfterViewInit {
-}
 
 @Component({
   selector: 'app-user-actions',
@@ -25,7 +24,7 @@ interface ngAfterViewInit {
 })
 export class UserActionsComponent implements OnInit, AfterViewInit {
 
-  @Input('userId') public userId!: string;
+  @Input('actions') public lastActions!: FilterUserLastActionsDTO;
 
   private Toast = Swal.mixin({
     toast: true,
@@ -42,7 +41,6 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
   public loader: boolean = true;
 
   public showActionsFilter: boolean = false;
-  public lastActions!: FilterUserLastActionsDTO;
   public pages: number[] = [];
 
   public years: { name: string, value: number }[] = [
@@ -63,13 +61,7 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    if (this.userId == null) {
-      this.router.navigate(['NotFound']);
-    }
-
-    this.lastActions = GenerateDTO.generateFilterUserLastActionsDTO(15, this.userId);
-
-    this.actionsManagerService.getYearsOfActions(this.userId).subscribe(response => {
+    this.actionsManagerService.getYearsOfActions(this.lastActions.userId).subscribe(response => {
       if (response.status == ResponseResultStatusType.Success) {
 
         for (let i = 0; i < response.data.length; i++) {
@@ -116,9 +108,9 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
 
       this.months = CommonTools.GetMonths(this.lastActions.year, 'همه ماه ها');
       this.days = CommonTools.GetMonthDays(this.lastActions.month, 'همه روز ها');
-
-      this.getLastActions();
     });
+
+    this.loader = false;
   }
 
   ngAfterViewInit(): void {
@@ -131,7 +123,7 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
 
   newAction() {
     const modalRef = this.modalService.open(AddActionFromAdminComponent);
-    modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.userId = this.lastActions.userId;
 
     modalRef.result.then((result: string) => {
       if (result) {
@@ -250,6 +242,8 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
       },
       queryParamsHandling: 'merge'
     });
+
+    this.getLastActions();
   }
 
   updateSelect(selectId: string) {

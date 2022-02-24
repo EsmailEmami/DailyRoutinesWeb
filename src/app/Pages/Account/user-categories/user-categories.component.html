@@ -64,6 +64,9 @@
         </tr>
         </tbody>
       </table>
+      <div *ngIf="categories.items.length == 0" class="alert alert-warning">
+        دسته بندی ای برای نمایش یافت نشد.
+      </div>
     </div>
 
     <ul class="pagination-custom">

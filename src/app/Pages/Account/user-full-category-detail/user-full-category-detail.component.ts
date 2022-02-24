@@ -14,7 +14,6 @@ import {ActionDetailComponent} from "../../Action/action-detail/action-detail.co
 import {EditCategoryComponent} from "../../Category/edit-category/edit-category.component";
 import {AddActionToCategoryComponent} from "../../Action/add-action-to-category/add-action-to-category.component";
 import {ActionsDateFilter} from "../../../DTOs/Routine/ActionsDateFilter";
-import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-full-category-detail',
@@ -66,24 +65,9 @@ export class UserFullCategoryDetailComponent implements OnInit {
 
     this.lastActions = GenerateDTO.generateFilterActionsDTO(categoryId, 15);
 
+    this.getCategory();
+
     this.getLastActions();
-    // category detail
-
-    let categoryData: CategoryDetailDTO | null = null;
-
-    this.categoriesService.getCurrentCategoryDetail(categoryId)?.subscribe(result => {
-      categoryData = result;
-    });
-
-
-    if (categoryData == null) {
-      this.getCategory();
-    } else {
-      this.loader = false;
-
-      this.category = categoryData;
-      this.setBreadCrumbsData(this.category.categoryTitle, this.category.categoryId);
-    }
 
 
     // years
@@ -212,6 +196,8 @@ export class UserFullCategoryDetailComponent implements OnInit {
     this.activatedRoute.data.subscribe((data: Data) => {
       this.category = data['category'];
 
+      this.setBreadCrumbsData(this.category.categoryTitle, this.category.categoryId);
+
       this.loader = false;
     });
   }
@@ -227,8 +213,9 @@ export class UserFullCategoryDetailComponent implements OnInit {
       }
     });
 
-    this.loader = false;
+    this.setBreadCrumbsData(this.category.categoryTitle, this.category.categoryId);
 
+    this.loader = false;
   }
 
   removeCategory(): void {

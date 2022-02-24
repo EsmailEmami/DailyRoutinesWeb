@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {UsersService} from "../../../../Services/users.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Data, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UserInformationDTO} from "../../../../DTOs/Users/UserInformationDTO";
 import {ResponseResultStatusType} from "../../../../Utilities/Enums/ResponseResultStatusType";
 import {EditUserComponent} from "../edit-user/edit-user.component";
 import Swal from "sweetalert2";
 import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../../DTOs/breadCrumbs/breadCrumbsResponse";
+import {FilterRolesDTO} from "../../../../DTOs/Access/FilterRolesDTO";
+import {FilterCategoriesDTO} from "../../../../DTOs/Routine/FilterCategoriesDTO";
+import {FilterUserLastActionsDTO} from "../../../../DTOs/Routine/FilterUserLastActions";
 
 @Component({
   selector: 'app-user-detail',
@@ -20,9 +23,12 @@ export class UserDetailComponent implements OnInit {
     urls: []
   };
 
-  private userId: string = ''
+  private userId: string = '';
 
   public user!: UserInformationDTO;
+  public roles!: FilterRolesDTO;
+  public categories!: FilterCategoriesDTO;
+  public actions!: FilterUserLastActionsDTO;
 
   private Toast = Swal.mixin({
     toast: true,
@@ -44,13 +50,17 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.activatedRoute.snapshot.params['userId'] == undefined) {
-      this.router.navigate(['NotFound']);
-    } else {
-      this.userId = this.activatedRoute.snapshot.params['userId'];
-    }
+    this.userId = this.activatedRoute.snapshot.params['userId'];
 
-    this.userInformation();
+    this.activatedRoute.data.subscribe((data: Data) => {
+      this.user = data['userInformation'];
+      this.roles = data['userRoles'];
+      this.categories = data['userCategories'];
+      this.actions = data['userActions'];
+
+      this.setBreadCrumbsData(this.user.firstName + ' ' + this.user.lastName, this.user.userId);
+    });
+
   }
 
   editUser() {
@@ -64,7 +74,7 @@ export class UserDetailComponent implements OnInit {
           title: result
         });
 
-        this.userInformation();
+        this.updateInformation();
       }
     }).catch(e => {
       if (e) {
@@ -132,7 +142,7 @@ export class UserDetailComponent implements OnInit {
         this.usersService.activeUser(this.user.userId).subscribe(response => {
           if (response.status == ResponseResultStatusType.Success) {
 
-          this.user.isBlock = false;
+            this.user.isBlock = false;
 
             this.Toast.fire({
               icon: 'success',
@@ -149,7 +159,7 @@ export class UserDetailComponent implements OnInit {
     })
   }
 
-  userInformation() {
+  updateInformation() {
     this.usersService.getUserInformation(this.userId).subscribe(res => {
       if (res.status == ResponseResultStatusType.Success) {
 
@@ -172,5 +182,4 @@ export class UserDetailComponent implements OnInit {
       ]
     }
   }
-
 }

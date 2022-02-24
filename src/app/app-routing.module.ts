@@ -27,6 +27,10 @@ import {
 } from "./Pages/Manager/UsersManager/user-full-category-detail-for-admin/user-full-category-detail-for-admin.component";
 import {UserAuthenticationGuard} from "./Utilities/Gaurd/UserAuthenticationGuard";
 import {CategoryDetailGuard} from "./Utilities/Resolvers/category-detail.guard";
+import {UserInformationGuard} from "./Utilities/Resolvers/user-information.guard";
+import {UserRolesGuard} from "./Utilities/Resolvers/user-roles.guard";
+import {UserCategoriesForAdminGuard} from "./Utilities/Resolvers/user-categories-for-admin.guard";
+import {UserLastActionsForAdminGuard} from "./Utilities/Resolvers/user-last-actions-for-admin.guard";
 
 const routes: Routes = [
   {
@@ -110,6 +114,12 @@ const routes: Routes = [
       },
       {
         path: 'Users/:userId', component: UserDetailComponent,
+        resolve: {
+          userInformation: UserInformationGuard,
+          userRoles: UserRolesGuard,
+          userCategories: UserCategoriesForAdminGuard,
+          userActions: UserLastActionsForAdminGuard
+        }
       },
       {
         path: 'Category/:categoryId', component: UserFullCategoryDetailForAdminComponent,

@@ -1,14 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../../../DTOs/breadCrumbs/breadCrumbsResponse";
 import Swal from "sweetalert2";
 import {FilterRolesDTO} from "../../../../../DTOs/Access/FilterRolesDTO";
-import {GenerateDTO} from "../../../../../Utilities/Generator/GenerateDTO";
 import {AccessService} from "../../../../../Services/access.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CommonTools} from "../../../../../Utilities/CommonTools";
-import {AddRoleComponent} from "../../../AccessManager/add-role/add-role.component";
-import {EditRoleComponent} from "../../../AccessManager/edit-role/edit-role.component";
 import {ResponseResultStatusType} from "../../../../../Utilities/Enums/ResponseResultStatusType";
 
 @Component({
@@ -18,7 +13,7 @@ import {ResponseResultStatusType} from "../../../../../Utilities/Enums/ResponseR
 })
 export class UserRolesComponent implements OnInit {
 
-  @Input('userId') public userId!: string;
+  @Input('roles') public roles!: FilterRolesDTO;
 
   private Toast = Swal.mixin({
     toast: true,
@@ -32,25 +27,21 @@ export class UserRolesComponent implements OnInit {
     }
   });
 
+  private userId: string = '';
+
   public loader: boolean = true;
 
   public showFilter: boolean = false;
 
-  public roles: FilterRolesDTO = GenerateDTO.generateFilterRolesDTO(15);
   public pages: number[] = [];
 
   constructor(private accessService: AccessService,
               private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private modalService: NgbModal) {
+              private router: Router) {
   }
 
   ngOnInit(): void {
-
-    if (this.userId == null) {
-      this.router.navigate(['NotFound']);
-    }
-
+    this.userId = this.activatedRoute.snapshot.params['userId'];
 
     this.activatedRoute.queryParams.subscribe(params => {
 
@@ -67,9 +58,9 @@ export class UserRolesComponent implements OnInit {
 
       this.roles.pageId = pageId;
       this.roles.search = search;
-
-      this.getRoles();
     });
+
+    this.loader = false;
   }
 
   showRolesFilterItems() {
@@ -89,6 +80,8 @@ export class UserRolesComponent implements OnInit {
       },
       queryParamsHandling: 'merge'
     });
+
+    this.getRoles();
   }
 
   deleteRoleFromUser(roleId: string, roleTitle: string) {

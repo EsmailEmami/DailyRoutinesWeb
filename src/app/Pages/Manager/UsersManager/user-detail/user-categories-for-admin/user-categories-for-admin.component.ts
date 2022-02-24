@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import Swal from "sweetalert2";
 import {FilterCategoriesDTO} from "../../../../../DTOs/Routine/FilterCategoriesDTO";
-import {GenerateDTO} from "../../../../../Utilities/Generator/GenerateDTO";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CommonTools} from "../../../../../Utilities/CommonTools";
@@ -23,7 +22,7 @@ declare function selectDropdown(): any;
 })
 export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
 
-  @Input('userId') public userId!: string;
+  @Input('categories') public categories!: FilterCategoriesDTO;
 
   loader: boolean = true;
 
@@ -39,9 +38,6 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
     }
   });
 
-  // @ts-ignore
-  categories: FilterCategoriesDTO;
-
   pages: number[] = [];
 
   showFilter = false;
@@ -53,11 +49,6 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    if (this.userId == null) {
-      this.router.navigate(['NotFound']);
-    }
-
-    this.categories = GenerateDTO.generateFilterCategoriesDTO(10, this.userId);
 
     this.activatedRoute.queryParams.subscribe(params => {
       let pageId = 1;
@@ -68,6 +59,8 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
       let search = '';
       if (params['categoriesSearch'] !== undefined) {
         search = params['categoriesSearch'];
+
+        this.showFilter = true;
       }
 
       let orderBy = 'UpdateDate';
@@ -79,8 +72,9 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
       this.categories.pageId = pageId;
       this.categories.search = search;
       this.categories.orderBy = orderBy;
-      this.getCategories();
     });
+
+    this.loader = false;
   }
 
   ngAfterViewInit(): void {
@@ -94,7 +88,7 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
 
   addCategory() {
     const modalRef = this.modalService.open(AddCategoryFromAdminComponent);
-    modalRef.componentInstance.userId = this.userId;
+    modalRef.componentInstance.userId = this.categories.userId;
 
     modalRef.result.then((result: string) => {
       if (result) {
@@ -152,6 +146,8 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
       },
       queryParamsHandling: 'merge'
     });
+
+    this.getCategories();
   }
 
   getCategories(): void {

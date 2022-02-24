@@ -10,6 +10,9 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {EditDashboardComponent} from "./edit-dashboard/edit-dashboard.component";
 import Swal from "sweetalert2";
 import {NewPhoneNumberComponent} from "./new-phone-number/new-phone-number.component";
+import {Router} from "@angular/router";
+
+declare function setButtonSniper(selector: string): any;
 
 @Component({
   selector: 'app-dashboard',
@@ -48,6 +51,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private userService: UsersService,
     private categoriesService: CategoriesService,
+    private router: Router,
     private modalService: NgbModal) {
   }
 
@@ -148,5 +152,12 @@ export class DashboardComponent implements OnInit {
         });
       }
     });
+  }
+
+  ShowFullCategoryDetail(categoryId: string): void {
+
+    setButtonSniper(`#btn-full-detail-${categoryId}`)
+
+    this.router.navigate(['/Account/Categories', categoryId]);
   }
 }

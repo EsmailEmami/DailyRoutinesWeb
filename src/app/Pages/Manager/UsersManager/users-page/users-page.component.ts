@@ -8,9 +8,10 @@ import {ResponseResultStatusType} from "../../../../Utilities/Enums/ResponseResu
 import {CommonTools} from "../../../../Utilities/CommonTools";
 import {UsersService} from "../../../../Services/users.service";
 import {FilterUsersDTO} from "../../../../DTOs/Users/FilterUsersDTO";
-import {EditCategoryComponent} from "../../../Category/edit-category/edit-category.component";
 import {EditUserComponent} from "../edit-user/edit-user.component";
 import {AddUserComponent} from "../add-user/add-user.component";
+
+declare function setButtonSniper(selector: string): any;
 
 declare function selectDropdown(): any;
 
@@ -199,7 +200,6 @@ export class UsersPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   addUser() {
     const modalRef = this.modalService.open(AddUserComponent);
 
@@ -222,6 +222,13 @@ export class UsersPageComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getUserDetail(userId: string) {
+
+    setButtonSniper(`#btn-user-detail-${userId}`);
+
+    this.router.navigate(['/Manager/Users/', userId]);
+
+  }
 
   getUsers() {
 

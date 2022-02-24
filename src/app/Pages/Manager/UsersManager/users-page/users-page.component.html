@@ -56,7 +56,9 @@
           <td>
             <button class="site-btn warning" (click)="editUser(item.userId)">ویرایش
             </button>
-            <button class="site-btn info" [routerLink]="['/Manager/Users/',item.userId]">جزئیات
+            <button class="site-btn info" [id]="'btn-user-detail-'+ item.userId"
+                    (click)="getUserDetail(item.userId)">
+              <span>جزئیات</span>
             </button>
             <button *ngIf="!item.isBlock" class="site-btn danger" (click)="blockUser(item.userId,item.fullName)">مسدود
               کردن
