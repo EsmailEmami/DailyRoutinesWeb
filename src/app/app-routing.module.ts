@@ -34,6 +34,7 @@ import {UserCategoryActionsForAdminGuard} from "./Utilities/Resolvers/user-categ
 import {UserAuthenticationGuard} from "./Utilities/Guard/user-authentication.guard";
 import {NotUserAuthenticationGuard} from "./Utilities/Guard/not-user-authentication.guard";
 import {RoleCheckGuard} from "./Utilities/Guard/role-check.guard";
+import {UserRecycleBinCategoriesForAdminGuard} from "./Utilities/Resolvers/user-recycle-bin-categories-for-admin.guard";
 
 const routes: Routes = [
   {
@@ -133,6 +134,7 @@ const routes: Routes = [
           userInformation: UserInformationGuard,
           userRoles: UserRolesGuard,
           userCategories: UserCategoriesForAdminGuard,
+          userRecycleCategories: UserRecycleBinCategoriesForAdminGuard,
           userActions: UserLastActionsForAdminGuard
         }
       },

@@ -21,22 +21,18 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authenticationService.isAuthenticated().subscribe(res => {
-        if (!res) {
-          this.authenticationService.CheckUserAuthentication().subscribe(res => {
 
-            if (res.status === 'Success') {
-              const currentUser: CurrentUser = new CurrentUser(
-                res.data.userId,
-                res.data.firstName,
-                res.data.lastName
-              );
-              this.authenticationService.setCurrentUser(currentUser);
-            }
-          });
-        }
+    this.authenticationService.CheckUserAuthentication().subscribe(res => {
+
+      if (res.status === 'Success') {
+        const currentUser: CurrentUser = new CurrentUser(
+          res.data.userId,
+          res.data.firstName,
+          res.data.lastName
+        );
+        this.authenticationService.setCurrentUser(currentUser);
       }
-    )
+    });
 
 
     this.router.events

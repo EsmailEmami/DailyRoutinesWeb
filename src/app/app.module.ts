@@ -78,6 +78,7 @@ import {ActionsManagerService} from "./Services/actions-manager.service";
 import {CategoriesManagerService} from "./Services/categories-manager.service";
 import { UserCategoriesForAdminComponent } from './Pages/Manager/UsersManager/user-detail/user-categories-for-admin/user-categories-for-admin.component';
 import { UserFullCategoryDetailForAdminComponent } from './Pages/Manager/UsersManager/user-full-category-detail-for-admin/user-full-category-detail-for-admin.component';
+import { UserRecycleBinCategoriesForAdminComponent } from './Pages/Manager/UsersManager/user-detail/user-recycle-bin-categories-for-admin/user-recycle-bin-categories-for-admin.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ import { UserFullCategoryDetailForAdminComponent } from './Pages/Manager/UsersMa
     EditCategoryFromAdminComponent,
     ActionDetailFromAdminComponent,
     UserCategoriesForAdminComponent,
-    UserFullCategoryDetailForAdminComponent
+    UserFullCategoryDetailForAdminComponent,
+    UserRecycleBinCategoriesForAdminComponent
   ],
   imports: [
     BrowserModule,

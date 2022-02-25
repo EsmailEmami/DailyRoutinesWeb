@@ -35,6 +35,23 @@ export class CategoriesManagerService {
     });
   }
 
+  getUserRecycleCategories(filter: FilterCategoriesDTO): Observable<IResponseResult<FilterCategoriesDTO>> {
+
+    if (filter.search == null) {
+      filter.search = '';
+    }
+
+    const params = new HttpParams()
+      .set('userId', filter.userId)
+      .set('pageId', filter.pageId)
+      .set('search', filter.search)
+      .set('takeEntity', filter.takeEntity)
+
+    return this.http.get<IResponseResult<FilterCategoriesDTO>>('/CategoriesManager/UserRecycleCategories', {
+      params: params
+    });
+  }
+
   getUserCategoriesForSelect(userId: string): Observable<IResponseResult<ItemsForSelectDTO[]>> {
     return this.http.get<IResponseResult<ItemsForSelectDTO[]>>('/CategoriesManager/UserCategoriesForSelect', {
       params: {
@@ -69,6 +86,15 @@ export class CategoriesManagerService {
 
   deleteCategory(categoryId: string): Observable<IResponseResult<any>> {
     return this.http.delete<IResponseResult<any>>('/CategoriesManager/DeleteCategory', {
+      params: {
+        categoryId: categoryId
+      }
+    });
+  }
+
+  // remove from recycle bin
+  returnCategory(categoryId: string): Observable<IResponseResult<any>> {
+    return this.http.put<IResponseResult<any>>('/CategoriesManager/ReturnCategory', null, {
       params: {
         categoryId: categoryId
       }

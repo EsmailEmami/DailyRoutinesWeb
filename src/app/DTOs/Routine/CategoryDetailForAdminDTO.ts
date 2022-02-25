@@ -4,6 +4,7 @@ export class CategoryDetailForAdminDTO {
               public categoryId: string,
               public categoryTitle: string,
               public lastUpdate: string,
+              public isDelete: boolean,
               public actionsCount: number) {
   }
 }

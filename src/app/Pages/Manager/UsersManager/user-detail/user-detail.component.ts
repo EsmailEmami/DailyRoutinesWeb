@@ -28,6 +28,7 @@ export class UserDetailComponent implements OnInit {
   public user!: UserInformationDTO;
   public roles!: FilterRolesDTO;
   public categories!: FilterCategoriesDTO;
+  public recycleCategories!: FilterCategoriesDTO;
   public actions!: FilterUserLastActionsDTO;
 
   private Toast = Swal.mixin({
@@ -56,6 +57,7 @@ export class UserDetailComponent implements OnInit {
       this.user = data['userInformation'];
       this.roles = data['userRoles'];
       this.categories = data['userCategories'];
+      this.recycleCategories = data['userRecycleCategories'];
       this.actions = data['userActions'];
 
       this.setBreadCrumbsData(this.user.firstName + ' ' + this.user.lastName, this.user.userId);

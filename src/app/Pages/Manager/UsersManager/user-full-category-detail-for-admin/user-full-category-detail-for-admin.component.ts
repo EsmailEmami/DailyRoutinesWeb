@@ -284,7 +284,8 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
             title: 'دسته بندی با موفقیت حذف شد.'
           });
 
-          this.router.navigate(['Manager/Users', this.category.userId]);
+          this.category.isDelete = true;
+
           break;
         }
         case ResponseResultStatusType.Error: {
@@ -301,6 +302,42 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
           });
           break;
         }
+      }
+    })
+  }
+
+  returnCategory() {
+    Swal.fire({
+      text: `آیا از بازگشت دسته بندی ${this.category.categoryTitle} اطمینان دارید؟`,
+      icon: 'warning',
+      customClass: {
+        confirmButton: 'site-btn success modal-btn',
+        cancelButton: 'site-btn danger modal-btn'
+      },
+      buttonsStyling: false,
+      reverseButtons: true,
+      showCancelButton: true,
+      cancelButtonText: 'لغو',
+      confirmButtonText: 'بازگشت'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.categoriesManagerService.returnCategory(this.category.categoryId).subscribe(response => {
+          if (response.status == ResponseResultStatusType.Success) {
+
+            this.category.isDelete = false;
+
+            this.Toast.fire({
+              icon: 'success',
+              title: 'دسته بندی با موفقیت برگشت خورد.'
+            });
+          } else {
+            this.Toast.fire({
+              icon: 'error',
+              title: response.message
+            });
+          }
+        });
       }
     })
   }

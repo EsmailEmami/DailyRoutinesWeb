@@ -123,7 +123,6 @@ export class UserCategoriesRecycleBinComponent implements OnInit {
     })
   }
 
-
   returnCategory(categoryId: string, categoryTitle: string) {
     Swal.fire({
       text: `آیا از بازگشت دسته بندی ${categoryTitle} اطمینان دارید؟`,
