@@ -12,8 +12,10 @@ import {
 import {
   EditCategoryFromAdminComponent
 } from "../../../../Category/edit-category-from-admin/edit-category-from-admin.component";
+import {AccessService} from "../../../../../Services/access.service";
 
 declare function selectDropdown(): any;
+
 declare function setButtonSniper(selector: string): any;
 
 @Component({
@@ -44,6 +46,7 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
   showFilter = false;
 
   constructor(private categoriesManagerService: CategoriesManagerService,
+              private accessService: AccessService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private modalService: NgbModal) {
@@ -88,49 +91,80 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
   }
 
   addCategory() {
-    const modalRef = this.modalService.open(AddCategoryFromAdminComponent);
-    modalRef.componentInstance.userId = this.categories.userId;
+    let access = false;
 
-    modalRef.result.then((result: string) => {
-      if (result) {
-        this.Toast.fire({
-          icon: 'success',
-          title: result
-        });
-
-        this.getCategories();
-      }
-    }).catch(e => {
-      if (e) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: e
-        });
+    this.accessService.roleCheck(['categories-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      const modalRef = this.modalService.open(AddCategoryFromAdminComponent);
+      modalRef.componentInstance.userId = this.categories.userId;
+
+      modalRef.result.then((result: string) => {
+        if (result) {
+          this.Toast.fire({
+            icon: 'success',
+            title: result
+          });
+
+          this.getCategories();
+        }
+      }).catch(e => {
+        if (e) {
+          this.Toast.fire({
+            icon: 'warning',
+            title: e
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما به این صفحه دسترسی ندارید.'
+      });
+    }
   }
 
   editCategory(categoryId: string) {
-    const modalRef = this.modalService.open(EditCategoryFromAdminComponent);
-    modalRef.componentInstance.categoryId = categoryId;
 
-    modalRef.result.then((result: string) => {
-      if (result) {
-        this.Toast.fire({
-          icon: 'success',
-          title: result
-        });
+    let access = false;
 
-        this.getCategories();
-      }
-    }).catch(e => {
-      if (e) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: e
-        });
+    this.accessService.roleCheck(['categories-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      const modalRef = this.modalService.open(EditCategoryFromAdminComponent);
+      modalRef.componentInstance.categoryId = categoryId;
+
+      modalRef.result.then((result: string) => {
+        if (result) {
+          this.Toast.fire({
+            icon: 'success',
+            title: result
+          });
+
+          this.getCategories();
+        }
+      }).catch(e => {
+        if (e) {
+          this.Toast.fire({
+            icon: 'warning',
+            title: e
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما به این صفحه دسترسی ندارید.'
+      });
+    }
   }
 
   updateCategories(pageId?: number): void {

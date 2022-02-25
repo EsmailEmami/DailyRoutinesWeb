@@ -33,7 +33,6 @@ export class AddUserComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-
     // set roles
     this.accessService.getRolesForSelect().subscribe(response => {
       if (response.status == ResponseResultStatusType.Success) {

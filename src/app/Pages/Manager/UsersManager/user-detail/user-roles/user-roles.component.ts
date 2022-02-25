@@ -85,39 +85,55 @@ export class UserRolesComponent implements OnInit {
   }
 
   deleteRoleFromUser(roleId: string, roleTitle: string) {
-    Swal.fire({
-      text: `آیا از حذف مقام ${roleTitle} اطمینان دارید؟`,
-      icon: 'warning',
-      customClass: {
-        confirmButton: 'site-btn success modal-btn',
-        cancelButton: 'site-btn danger modal-btn'
-      },
-      buttonsStyling: false,
-      reverseButtons: true,
-      showCancelButton: true,
-      cancelButtonText: 'لغو',
-      confirmButtonText: 'حذف'
-    }).then((result) => {
-      if (result.isConfirmed) {
 
-        this.accessService.deleteRoleFromUser(this.userId, roleId).subscribe(response => {
-          if (response.status == ResponseResultStatusType.Success) {
+    let access = false;
 
-            this.getRoles();
-
-            this.Toast.fire({
-              icon: 'success',
-              title: 'فعالیت با موفقیت حذف شد.'
-            });
-          } else {
-            this.Toast.fire({
-              icon: 'error',
-              title: response.message
-            });
-          }
-        });
+    this.accessService.roleCheck(['roles-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      Swal.fire({
+        text: `آیا از حذف مقام ${roleTitle} اطمینان دارید؟`,
+        icon: 'warning',
+        customClass: {
+          confirmButton: 'site-btn success modal-btn',
+          cancelButton: 'site-btn danger modal-btn'
+        },
+        buttonsStyling: false,
+        reverseButtons: true,
+        showCancelButton: true,
+        cancelButtonText: 'لغو',
+        confirmButtonText: 'حذف'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.accessService.deleteRoleFromUser(this.userId, roleId).subscribe(response => {
+            if (response.status == ResponseResultStatusType.Success) {
+
+              this.getRoles();
+
+              this.Toast.fire({
+                icon: 'success',
+                title: 'فعالیت با موفقیت حذف شد.'
+              });
+            } else {
+              this.Toast.fire({
+                icon: 'error',
+                title: response.message
+              });
+            }
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما دسترسی لازم برای حذف مقام را ندارید.'
+      });
+    }
   }
 
 

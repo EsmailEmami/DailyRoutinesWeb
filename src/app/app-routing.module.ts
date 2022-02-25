@@ -110,7 +110,7 @@ const routes: Routes = [
   },
   {
     path: 'Manager', component: AccountComponent,
-    canActivate: [RoleCheckGuard],
+    canActivate: [UserAuthenticationGuard, RoleCheckGuard],
     data: {
       roles: ['admin']
     },
@@ -118,9 +118,17 @@ const routes: Routes = [
       {path: '', redirectTo: '/NotFound', pathMatch: 'full'},
       {
         path: 'Users', component: UsersPageComponent,
+        canActivate: [RoleCheckGuard],
+        data: {
+          roles: ['users-manager']
+        },
       },
       {
         path: 'Users/:userId', component: UserDetailComponent,
+        canActivate: [RoleCheckGuard],
+        data: {
+          roles: ['users-manager']
+        },
         resolve: {
           userInformation: UserInformationGuard,
           userRoles: UserRolesGuard,
@@ -130,6 +138,10 @@ const routes: Routes = [
       },
       {
         path: 'Category/:categoryId', component: UserFullCategoryDetailForAdminComponent,
+        canActivate: [RoleCheckGuard],
+        data: {
+          roles: ['categories-manager']
+        },
         resolve: {
           category: UserFullCategoryDetailForAdminGuard,
           actions: UserCategoryActionsForAdminGuard
@@ -137,9 +149,17 @@ const routes: Routes = [
       },
       {
         path: 'Admins', component: AdminUsersComponent,
+        canActivate: [RoleCheckGuard],
+        data: {
+          roles: ['admins-manager']
+        },
       },
       {
         path: 'Roles', component: RolesPageComponent,
+        canActivate: [RoleCheckGuard],
+        data: {
+          roles: ['roles-manager']
+        },
       },
     ]
   },

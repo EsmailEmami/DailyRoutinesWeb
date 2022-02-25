@@ -20,8 +20,6 @@ export class RoleCheckGuard implements CanActivate {
 
     const roles: string[] = route.data['roles'];
 
-    alert('called')
-
     return this.accessService.roleCheck(roles).pipe(map((response) => {
       if (response.status == ResponseResultStatusType.Success) {
         return true;

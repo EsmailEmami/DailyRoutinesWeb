@@ -12,6 +12,7 @@ import {EditActionFromAdminComponent} from "../../../../Action/edit-action-from-
 import {
   ActionDetailFromAdminComponent
 } from "../../../../Action/action-detail-from-admin/action-detail-from-admin.component";
+import {AccessService} from "../../../../../Services/access.service";
 
 declare function selectDropdown(): any;
 
@@ -54,6 +55,7 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
 
 
   constructor(private actionsManagerService: ActionsManagerService,
+              private accessService: AccessService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private modalService: NgbModal) {
@@ -122,108 +124,173 @@ export class UserActionsComponent implements OnInit, AfterViewInit {
   }
 
   newAction() {
-    const modalRef = this.modalService.open(AddActionFromAdminComponent);
-    modalRef.componentInstance.userId = this.lastActions.userId;
 
-    modalRef.result.then((result: string) => {
-      if (result) {
-        this.Toast.fire({
-          icon: 'success',
-          title: result
-        });
+    let access = false;
 
-        this.getLastActions();
-      }
-    }).catch(e => {
-      if (e) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: e
-        });
+    this.accessService.roleCheck(['actions-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      const modalRef = this.modalService.open(AddActionFromAdminComponent);
+      modalRef.componentInstance.userId = this.lastActions.userId;
+
+      modalRef.result.then((result: string) => {
+        if (result) {
+          this.Toast.fire({
+            icon: 'success',
+            title: result
+          });
+
+          this.getLastActions();
+        }
+      }).catch(e => {
+        if (e) {
+          this.Toast.fire({
+            icon: 'warning',
+            title: e
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما به این صفحه دسترسی ندارید.'
+      });
+    }
   }
 
   editAction(actionId: string) {
-    const modalRef = this.modalService.open(EditActionFromAdminComponent);
-    modalRef.componentInstance.actionId = actionId;
 
-    modalRef.result.then((result: string) => {
-      if (result) {
-        this.Toast.fire({
-          icon: 'success',
-          title: result
-        });
+    let access = false;
 
-        this.getLastActions();
-      }
-    }).catch(e => {
-      if (e) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: e
-        });
+    this.accessService.roleCheck(['actions-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      const modalRef = this.modalService.open(EditActionFromAdminComponent);
+      modalRef.componentInstance.actionId = actionId;
+
+      modalRef.result.then((result: string) => {
+        if (result) {
+          this.Toast.fire({
+            icon: 'success',
+            title: result
+          });
+
+          this.getLastActions();
+        }
+      }).catch(e => {
+        if (e) {
+          this.Toast.fire({
+            icon: 'warning',
+            title: e
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما به این صفحه دسترسی ندارید.'
+      });
+    }
   }
 
   actionDetail(actionId: string) {
-    const modalRef = this.modalService.open(ActionDetailFromAdminComponent);
-    modalRef.componentInstance.actionId = actionId;
 
-    modalRef.result.then((result: string) => {
-      if (result) {
-        this.Toast.fire({
-          icon: 'success',
-          title: result
-        });
+    let access = false;
 
-        this.getLastActions();
-      }
-    }).catch(e => {
-      if (e) {
-        this.Toast.fire({
-          icon: 'warning',
-          title: e
-        });
+    this.accessService.roleCheck(['actions-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
     });
+
+    if (access) {
+      const modalRef = this.modalService.open(ActionDetailFromAdminComponent);
+      modalRef.componentInstance.actionId = actionId;
+
+      modalRef.result.then((result: string) => {
+        if (result) {
+          this.Toast.fire({
+            icon: 'success',
+            title: result
+          });
+
+          this.getLastActions();
+        }
+      }).catch(e => {
+        if (e) {
+          this.Toast.fire({
+            icon: 'warning',
+            title: e
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما به این صفحه دسترسی ندارید.'
+      });
+    }
   }
 
   deleteAction(actionId: string, actionTitle: string) {
-    Swal.fire({
-      text: `آیا از حذف فعالیت ${actionTitle} اطمینان دارید؟`,
-      icon: 'warning',
-      customClass: {
-        confirmButton: 'site-btn success modal-btn',
-        cancelButton: 'site-btn danger modal-btn'
-      },
-      buttonsStyling: false,
-      reverseButtons: true,
-      showCancelButton: true,
-      cancelButtonText: 'لغو',
-      confirmButtonText: 'حذف'
-    }).then((result) => {
-      if (result.isConfirmed) {
 
-        this.actionsManagerService.deleteAction(actionId).subscribe(response => {
-          if (response.status == ResponseResultStatusType.Success) {
+    let access = false;
 
-            this.getLastActions();
-
-            this.Toast.fire({
-              icon: 'success',
-              title: 'فعالیت با موفقیت حذف شد.'
-            });
-          } else {
-            this.Toast.fire({
-              icon: 'error',
-              title: response.message
-            });
-          }
-        });
+    this.accessService.roleCheck(['actions-manager']).subscribe(result => {
+      if (result.status == ResponseResultStatusType.Success) {
+        access = true;
       }
-    })
+    });
+
+
+    if (access) {
+      Swal.fire({
+        text: `آیا از حذف فعالیت ${actionTitle} اطمینان دارید؟`,
+        icon: 'warning',
+        customClass: {
+          confirmButton: 'site-btn success modal-btn',
+          cancelButton: 'site-btn danger modal-btn'
+        },
+        buttonsStyling: false,
+        reverseButtons: true,
+        showCancelButton: true,
+        cancelButtonText: 'لغو',
+        confirmButtonText: 'حذف'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.actionsManagerService.deleteAction(actionId).subscribe(response => {
+            if (response.status == ResponseResultStatusType.Success) {
+
+              this.getLastActions();
+
+              this.Toast.fire({
+                icon: 'success',
+                title: 'فعالیت با موفقیت حذف شد.'
+              });
+            } else {
+              this.Toast.fire({
+                icon: 'error',
+                title: response.message
+              });
+            }
+          });
+        }
+      });
+    } else {
+      this.Toast.fire({
+        icon: 'error',
+        title: 'شما دسترسی لازم برای حذف فعالیت را ندارید.'
+      });
+    }
   }
 
   updateLastActions(pageId?: number): void {
