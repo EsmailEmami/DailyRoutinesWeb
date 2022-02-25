@@ -8,7 +8,6 @@ import {LoginComponent} from "./Pages/Account/login/login.component";
 import {RegisterComponent} from "./Pages/Account/register/register.component";
 import {DashboardComponent} from "./Pages/Account/dashboard/dashboard.component";
 import {NotFoundComponent} from "./SharedComponents/not-found/not-found.component";
-import {NotUserAuthenticationGuard} from './Utilities/Gaurd/NotUserAuthenticationGaurd';
 import {UserCategoryDetailComponent} from "./Pages/Account/user-category-detail/user-category-detail.component";
 import {
   UserFullCategoryDetailComponent
@@ -25,7 +24,6 @@ import {AdminUsersComponent} from "./Pages/Manager/UsersManager/admin-users/admi
 import {
   UserFullCategoryDetailForAdminComponent
 } from "./Pages/Manager/UsersManager/user-full-category-detail-for-admin/user-full-category-detail-for-admin.component";
-import {UserAuthenticationGuard} from "./Utilities/Gaurd/UserAuthenticationGuard";
 import {CategoryDetailGuard} from "./Utilities/Resolvers/category-detail.guard";
 import {UserInformationGuard} from "./Utilities/Resolvers/user-information.guard";
 import {UserRolesGuard} from "./Utilities/Resolvers/user-roles.guard";
@@ -33,6 +31,9 @@ import {UserCategoriesForAdminGuard} from "./Utilities/Resolvers/user-categories
 import {UserLastActionsForAdminGuard} from "./Utilities/Resolvers/user-last-actions-for-admin.guard";
 import {UserFullCategoryDetailForAdminGuard} from "./Utilities/Resolvers/user-full-category-detail-for-admin.guard";
 import {UserCategoryActionsForAdminGuard} from "./Utilities/Resolvers/user-category-actions-for-admin.guard";
+import {UserAuthenticationGuard} from "./Utilities/Guard/user-authentication.guard";
+import {NotUserAuthenticationGuard} from "./Utilities/Guard/not-user-authentication.guard";
+import {RoleCheckGuard} from "./Utilities/Guard/role-check.guard";
 
 const routes: Routes = [
   {
@@ -109,6 +110,10 @@ const routes: Routes = [
   },
   {
     path: 'Manager', component: AccountComponent,
+    canActivate: [RoleCheckGuard],
+    data: {
+      roles: ['admin']
+    },
     children: [
       {path: '', redirectTo: '/NotFound', pathMatch: 'full'},
       {

@@ -1,20 +1,13 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree
-} from "@angular/router";
-import {catchError, Observable, of} from "rxjs";
-import {Injectable} from "@angular/core";
-import {AuthenticationService} from "src/app/Services/authentication.service";
+import { Injectable } from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
+import {catchError, Observable, of} from 'rxjs';
+import {AuthenticationService} from "../../Services/authentication.service";
 import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthenticationGuard implements CanActivate {
-
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router) {
@@ -32,7 +25,7 @@ export class UserAuthenticationGuard implements CanActivate {
         }
       });
 
-      return true;
+      return false;
 
     }), catchError((error) => {
 

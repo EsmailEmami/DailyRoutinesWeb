@@ -78,4 +78,8 @@ export class AccessService {
       }
     });
   }
+
+  roleCheck(roles: string[]): Observable<IResponseResult<any>> {
+    return this.http.post<IResponseResult<any>>('/AccessManager/RoleCheck', roles);
+  }
 }
