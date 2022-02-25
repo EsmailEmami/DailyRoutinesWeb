@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../../DTOs/breadCrumbs/breadCrumbsResponse";
 import Swal from "sweetalert2";
 import {FilterActionsDTO} from "../../../../DTOs/Routine/FilterActionsDTO";
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Data, Params, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GenerateDTO} from "../../../../Utilities/Generator/GenerateDTO";
 import {ResponseResultStatusType} from "../../../../Utilities/Enums/ResponseResultStatusType";
@@ -50,7 +50,8 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
 
   public category!: CategoryDetailForAdminDTO;
 
-  public loader: boolean = true;
+  public categoryLoader: boolean = true;
+  public actionsLoader: boolean = true;
 
   public showActionsFilter: boolean = false;
   public lastActions!: FilterActionsDTO;
@@ -76,10 +77,13 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
 
     this.categoryId = this.activatedRoute.snapshot.params['categoryId'];
 
-    this.getCategory();
+    this.activatedRoute.data.subscribe((data: Data) => {
+      this.category = data['category'];
+      this.lastActions = data['actions'];
+    });
 
+    this.setBreadCrumbsData(this.category.categoryTitle, this.category.fullName, this.category.categoryId, this.category.userId);
 
-    this.lastActions = GenerateDTO.generateFilterActionsDTO(this.categoryId, 15);
 
     this.categoriesManagerService.getYearsOfCategoryActions(this.categoryId).subscribe(response => {
       if (response.status == ResponseResultStatusType.Success) {
@@ -131,10 +135,12 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
       this.months = CommonTools.GetMonths(this.lastActions.year, 'همه ماه ها');
       this.days = CommonTools.GetMonthDays(this.lastActions.month, 'همه روز ها');
 
-      this.getLastActions();
     });
 
     setTimeout(selectDropdown, 500);
+
+    this.categoryLoader = false;
+    this.actionsLoader = false;
   }
 
   showActionsFilterItems() {
@@ -142,9 +148,10 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
   }
 
   getCategory() {
-    this.categoriesManagerService.getCategory(this.categoryId).subscribe(res => {
+    this.categoryLoader = false;
 
-      this.loader = false;
+
+    this.categoriesManagerService.getCategory(this.categoryId).subscribe(res => {
 
       if (res.status == ResponseResultStatusType.Success) {
         this.category = res.data;
@@ -154,6 +161,8 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
         this.router.navigate(['NotFound']);
       }
     });
+
+    this.categoryLoader = false;
   }
 
   newAction() {
@@ -319,7 +328,6 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
     });
   }
 
-
   updateLastActions(pageId?: number): void {
     if (pageId != null) {
       this.lastActions.pageId = pageId;
@@ -365,6 +373,8 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
     this.router.navigate([CommonTools.getCurrentUrlWithoutParams(this.router)], {
       queryParams: params
     });
+
+    this.getLastActions();
   }
 
   updateSelect(selectId: string) {
@@ -387,11 +397,9 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
 
   getLastActions() {
 
-    this.loader = true;
+    this.actionsLoader = true;
 
     this.actionsManagerService.getActionsOfCategory(this.lastActions).subscribe(response => {
-
-      this.loader = false;
 
       if (response.status == ResponseResultStatusType.Success) {
         this.lastActions = response.data;
@@ -404,6 +412,8 @@ export class UserFullCategoryDetailForAdminComponent implements OnInit {
         this.router.navigate(['NotFound'])
       }
     });
+
+    this.actionsLoader = false;
   }
 
   setBreadCrumbsData(categoryTitle: string, fullName: string, categoryId: string, userId: string) {

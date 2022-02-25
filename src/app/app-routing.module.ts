@@ -31,6 +31,8 @@ import {UserInformationGuard} from "./Utilities/Resolvers/user-information.guard
 import {UserRolesGuard} from "./Utilities/Resolvers/user-roles.guard";
 import {UserCategoriesForAdminGuard} from "./Utilities/Resolvers/user-categories-for-admin.guard";
 import {UserLastActionsForAdminGuard} from "./Utilities/Resolvers/user-last-actions-for-admin.guard";
+import {UserFullCategoryDetailForAdminGuard} from "./Utilities/Resolvers/user-full-category-detail-for-admin.guard";
+import {UserCategoryActionsForAdminGuard} from "./Utilities/Resolvers/user-category-actions-for-admin.guard";
 
 const routes: Routes = [
   {
@@ -123,6 +125,10 @@ const routes: Routes = [
       },
       {
         path: 'Category/:categoryId', component: UserFullCategoryDetailForAdminComponent,
+        resolve: {
+          category: UserFullCategoryDetailForAdminGuard,
+          actions: UserCategoryActionsForAdminGuard
+        }
       },
       {
         path: 'Admins', component: AdminUsersComponent,

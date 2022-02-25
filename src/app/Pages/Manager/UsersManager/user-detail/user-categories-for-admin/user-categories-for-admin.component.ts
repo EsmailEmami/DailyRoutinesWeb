@@ -14,6 +14,7 @@ import {
 } from "../../../../Category/edit-category-from-admin/edit-category-from-admin.component";
 
 declare function selectDropdown(): any;
+declare function setButtonSniper(selector: string): any;
 
 @Component({
   selector: 'app-user-categories-for-admin',
@@ -150,9 +151,17 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
     this.getCategories();
   }
 
+  ShowFullCategoryDetail(categoryId: string): void {
+
+    setButtonSniper(`#btn-full-category-detail-${categoryId}`)
+
+    this.router.navigate(['/Manager/Category', categoryId]);
+  }
+
   getCategories(): void {
+    this.loader = true;
+
     this.categoriesManagerService.getUserCategories(this.categories).subscribe(res => {
-      this.loader = false;
       if (res.status == ResponseResultStatusType.Success) {
         this.categories = res.data;
         this.pages = [];
@@ -161,5 +170,7 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
         }
       }
     });
+
+    this.loader = false;
   }
 }

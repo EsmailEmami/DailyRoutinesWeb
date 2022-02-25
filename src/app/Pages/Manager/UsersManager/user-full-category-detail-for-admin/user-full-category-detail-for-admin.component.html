@@ -3,13 +3,12 @@
 <!-- End Breadcrumbs -->
 
 <div class="content-main">
-  <div *ngIf="category != null">
     <div class="box-data" data-aos="zoom-in">
       <div class="data-header">
         <h2 class="info">اطلاعات کلی</h2>
 
         <div>
-          <button class="site-btn danger" [swal]="deleteSwal">حذف</button>
+          <button class="site-btn danger" [swal]="deleteSwal">غیر فعال</button>
           <button class="site-btn warning" (click)="editCategory()">ویرایش</button>
         </div>
       </div>
@@ -33,10 +32,10 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="lastActions != null">
+      <div *ngIf="categoryLoader" class="preloader"></div>
+    </div>
+
     <div class="box-data" data-aos="zoom-in">
       <div class="data-header">
         <h2 class="info">فعالیت ها</h2>
@@ -47,8 +46,44 @@
             (click)="newAction()">
             فعالیت جدید
           </button>
+          <button class="site-btn warning" (click)="showActionsFilterItems()">
+            فیلتر
+          </button>
         </div>
       </div>
+
+      <div class="data-filter" [class.d-block]="showActionsFilter">
+        <div class="input">
+          <input
+            type="text"
+            placeholder="دنبال چی میگردی..."
+            [(ngModel)]="lastActions.search"
+            (keyup.enter)="updateLastActions()"
+          />
+          <button type="button" (click)="updateLastActions()">
+            <i class="far fa-search"></i>
+          </button>
+        </div>
+
+        <div class="row mt-2">
+          <div class="select-box col-xs-12 col-sm-3">
+            <select set [(ngModel)]="lastActions.year" (change)="updateSelect('month-section')">
+              <option *ngFor="let year of years" [value]="year.value">{{year.name}}</option>
+            </select>
+          </div>
+          <div class="select-box col-xs-12 col-sm-5">
+            <select set [(ngModel)]="lastActions.month" id="month-section" (change)="updateSelect('month-section')">
+              <option *ngFor="let month of months" [value]="month.value">{{month.name}}</option>
+            </select>
+          </div>
+          <div class="select-box col-xs-12 col-sm-4">
+            <select set id="day-section" [(ngModel)]="lastActions.day" (change)="updateSelect('day-section')">
+              <option *ngFor="let day of days" [value]="day.value">{{day.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <div class="d-block">
         <table class="table table-hover">
           <thead>
@@ -88,15 +123,14 @@
           فعالیتی برای نمایش یافت نشد.
         </div>
       </div>
-    </div>
-  </div>
 
-  <div *ngIf="loader" class="preloader"></div>
+      <div *ngIf="actionsLoader" class="preloader"></div>
+    </div>
 </div>
 
 <swal
   #deleteSwal
-  text="آیا از حذف دسته بندی {{category.categoryTitle}} اطمینان دارید؟"
+  text="آیا از غیر فعال کردن دسته بندی {{category.categoryTitle}} اطمینان دارید؟"
   icon="warning"
   [showCancelButton]="true"
   (confirm)="removeCategory()"

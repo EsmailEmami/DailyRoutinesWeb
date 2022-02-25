@@ -42,7 +42,9 @@
         <td>{{item.categoryTitle}}</td>
         <td>{{item.lastUpdateDate}}</td>
         <td>
-          <button class="site-btn info" [routerLink]="['/Manager/Category', item.categoryId]">جزئیات
+          <button class="site-btn info" [id]="'btn-full-category-detail-'+item.categoryId"
+                  (click)="ShowFullCategoryDetail(item.categoryId)">
+            <span>جزئیات</span>
           </button>
           <button class="site-btn warning" (click)="editCategory(item.categoryId)">ویرایش
           </button>
