@@ -1,11 +1,8 @@
-<div class="box-data" data-aos="zoom-in">
+<div class="box-data">
   <div class="data-header">
-    <h2 class="info">دسته بندی ها</h2>
+    <h2 class="info">بازیافتی ها</h2>
 
     <div>
-      <button class="site-btn success" id="add-category" (click)="addCategory()">
-        <span>دسته بندی جدید</span>
-      </button>
       <button class="site-btn warning" (click)="showFilterItems()">فیلتر</button>
     </div>
   </div>
@@ -44,13 +41,17 @@
         <td>{{item.categoryTitle}}</td>
         <td>{{item.lastUpdateDate}}</td>
         <td>
-          <button class="site-btn info" [id]="'btn-full-category-detail-'+item.categoryId"
+          <button class="site-btn success" [id]="'return-category-' + item.categoryId"
+                  (click)="returnCategory(item.categoryId, item.categoryTitle)">
+            <span>بازگشت</span>
+          </button>
+          <button class="site-btn danger" [id]="'delete-category-' + item.categoryId"
+                  (click)="deleteCategory(item.categoryId, item.categoryTitle)">
+            <span>حذف</span>
+          </button>
+          <button class="site-btn info" [id]="'btn-recycle-category-detail-'+item.categoryId"
                   (click)="ShowFullCategoryDetail(item.categoryId)">
             <span>جزئیات</span>
-          </button>
-          <button class="site-btn warning" [id]="'edit-category' + item.categoryId"
-                  (click)="editCategory(item.categoryId)">
-            <span>ویرایش</span>
           </button>
         </td>
       </tr>

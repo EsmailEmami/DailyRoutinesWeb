@@ -1,13 +1,12 @@
-<div class="box-data" >
+<div class="box-data">
   <div class="data-header">
     <h2 class="info">اخرین فعالیت ها</h2>
 
     <div>
       <button
         class="site-btn success"
-        (click)="newAction()"
-      >
-        فعالیت جدید
+        (click)="newAction()" id="new-action">
+        <span>فعالیت جدید</span>
       </button>
       <button class="site-btn warning" (click)="showActionsFilterItems()">
         فیلتر
@@ -34,7 +33,7 @@
           <option *ngFor="let year of years" [value]="year.value">{{year.name}}</option>
         </select>
       </div>
-      <div class="select-box col-xs-12 col-sm-5" >
+      <div class="select-box col-xs-12 col-sm-5">
         <select set [(ngModel)]="lastActions.month" id="month-section" (change)="updateSelect('month-section')">
           <option *ngFor="let month of months" [value]="month.value">{{month.name}}</option>
         </select>
@@ -65,19 +64,19 @@
         <td>{{ item.createDate }}</td>
         <td>
           <button
-            class="site-btn info"
+            class="site-btn info" [id]="'action-detail-' + item.actionId"
             (click)="actionDetail(item.actionId)">
-            جزئیات
+            <span>جزئیات</span>
           </button>
           <button
-            class="site-btn warning"
+            class="site-btn warning" [id]="'edit-action-' + item.actionId"
             (click)="editAction(item.actionId)">
-            ویرایش
+            <span>ویرایش</span>
           </button>
           <button
-            class="site-btn danger"
+            class="site-btn danger" [id]="'delete-action-' + item.actionId"
             (click)="deleteAction(item.actionId, item.actionTitle)">
-            حذف
+            <span>حذف</span>
           </button>
         </td>
       </tr>

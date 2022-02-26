@@ -17,6 +17,7 @@ import {AccessService} from "../../../../../Services/access.service";
 declare function selectDropdown(): any;
 
 declare function setButtonSniper(selector: string): any;
+declare function removeButtonSniper(selector: string): any;
 
 @Component({
   selector: 'app-user-categories-for-admin',
@@ -91,80 +92,81 @@ export class UserCategoriesForAdminComponent implements OnInit, AfterViewInit {
   }
 
   addCategory() {
-    let access = false;
+
+    setButtonSniper('#add-category');
+
 
     this.accessService.roleCheck(['categories-manager']).subscribe(result => {
+
+      removeButtonSniper('#add-category');
+
+
       if (result.status == ResponseResultStatusType.Success) {
-        access = true;
+        const modalRef = this.modalService.open(AddCategoryFromAdminComponent);
+        modalRef.componentInstance.userId = this.categories.userId;
+
+        modalRef.result.then((result: string) => {
+          if (result) {
+            this.Toast.fire({
+              icon: 'success',
+              title: result
+            });
+
+            this.getCategories();
+          }
+        }).catch(e => {
+          if (e) {
+            this.Toast.fire({
+              icon: 'warning',
+              title: e
+            });
+          }
+        });
+      } else {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'شما به این صفحه دسترسی ندارید.'
+        });
       }
     });
-
-    if (access) {
-      const modalRef = this.modalService.open(AddCategoryFromAdminComponent);
-      modalRef.componentInstance.userId = this.categories.userId;
-
-      modalRef.result.then((result: string) => {
-        if (result) {
-          this.Toast.fire({
-            icon: 'success',
-            title: result
-          });
-
-          this.getCategories();
-        }
-      }).catch(e => {
-        if (e) {
-          this.Toast.fire({
-            icon: 'warning',
-            title: e
-          });
-        }
-      });
-    } else {
-      this.Toast.fire({
-        icon: 'error',
-        title: 'شما به این صفحه دسترسی ندارید.'
-      });
-    }
   }
 
   editCategory(categoryId: string) {
 
-    let access = false;
+    setButtonSniper(`#edit-category${categoryId}`);
 
     this.accessService.roleCheck(['categories-manager']).subscribe(result => {
+
+      removeButtonSniper(`#edit-category${categoryId}`);
+
       if (result.status == ResponseResultStatusType.Success) {
-        access = true;
+        const modalRef = this.modalService.open(EditCategoryFromAdminComponent);
+        modalRef.componentInstance.categoryId = categoryId;
+
+        modalRef.result.then((result: string) => {
+          if (result) {
+            this.Toast.fire({
+              icon: 'success',
+              title: result
+            });
+
+            this.getCategories();
+          }
+        }).catch(e => {
+          if (e) {
+            this.Toast.fire({
+              icon: 'warning',
+              title: e
+            });
+          }
+        });
+      } else {
+        this.Toast.fire({
+          icon: 'error',
+          title: 'شما به این صفحه دسترسی ندارید.'
+        });
       }
     });
-
-    if (access) {
-      const modalRef = this.modalService.open(EditCategoryFromAdminComponent);
-      modalRef.componentInstance.categoryId = categoryId;
-
-      modalRef.result.then((result: string) => {
-        if (result) {
-          this.Toast.fire({
-            icon: 'success',
-            title: result
-          });
-
-          this.getCategories();
-        }
-      }).catch(e => {
-        if (e) {
-          this.Toast.fire({
-            icon: 'warning',
-            title: e
-          });
-        }
-      });
-    } else {
-      this.Toast.fire({
-        icon: 'error',
-        title: 'شما به این صفحه دسترسی ندارید.'
-      });
-    }
   }
 
   updateCategories(pageId?: number): void {

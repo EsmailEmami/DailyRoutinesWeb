@@ -29,7 +29,9 @@
         <th scope="row">{{ i + 1}}</th>
         <td>{{item.roleName}}</td>
         <td>
-          <button class="site-btn danger" (click)="deleteRoleFromUser(item.roleId, item.roleName)">حذف
+          <button class="site-btn danger" [id]="'delete-role-' + item.roleId"
+                  (click)="deleteRoleFromUser(item.roleId, item.roleName)">
+            <span>حذف</span>
           </button>
         </td>
       </tr>
