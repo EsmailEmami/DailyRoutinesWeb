@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {UsersService} from "../../../../Services/users.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -10,6 +10,7 @@ import {BreadCrumbsResponse, UrlOfBreadCrumbs} from "../../../../DTOs/breadCrumb
 import {FilterRolesDTO} from "../../../../DTOs/Access/FilterRolesDTO";
 import {FilterCategoriesDTO} from "../../../../DTOs/Routine/FilterCategoriesDTO";
 import {FilterUserLastActionsDTO} from "../../../../DTOs/Routine/FilterUserLastActions";
+import {UserCategoriesForAdminComponent} from "./user-categories-for-admin/user-categories-for-admin.component";
 
 @Component({
   selector: 'app-user-detail',
@@ -17,6 +18,8 @@ import {FilterUserLastActionsDTO} from "../../../../DTOs/Routine/FilterUserLastA
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
+
+  @ViewChild(UserCategoriesForAdminComponent, {static: false }) categoriesComponent!: UserCategoriesForAdminComponent;
 
   public breadCrumbsData: BreadCrumbsResponse = {
     breadCrumbsTitle: "",
@@ -87,7 +90,6 @@ export class UserDetailComponent implements OnInit {
       }
     });
   }
-
 
   blockUser() {
     Swal.fire({
@@ -173,6 +175,10 @@ export class UserDetailComponent implements OnInit {
         this.router.navigate(['NotFound']);
       }
     });
+  }
+
+  callCategories() {
+    this.categoriesComponent.getCategories();
   }
 
   setBreadCrumbsData(fullName: string, userId: string) {

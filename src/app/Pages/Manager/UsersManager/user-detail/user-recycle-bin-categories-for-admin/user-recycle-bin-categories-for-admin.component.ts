@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FilterCategoriesDTO} from "../../../../../DTOs/Routine/FilterCategoriesDTO";
 import Swal from "sweetalert2";
 import {CategoriesManagerService} from "../../../../../Services/categories-manager.service";
@@ -10,8 +10,10 @@ import {CommonTools} from "../../../../../Utilities/CommonTools";
 import {
   AddCategoryFromAdminComponent
 } from "../../../../Category/add-category-from-admin/add-category-from-admin.component";
+import {UserCategoriesForAdminComponent} from "../user-categories-for-admin/user-categories-for-admin.component";
 
 declare function setButtonSniper(selector: string): any;
+
 declare function removeButtonSniper(selector: string): any;
 
 @Component({
@@ -22,6 +24,7 @@ declare function removeButtonSniper(selector: string): any;
 export class UserRecycleBinCategoriesForAdminComponent implements OnInit {
 
   @Input('categories') public categories!: FilterCategoriesDTO;
+  @Output('callCategories') callCategories: EventEmitter<any> = new EventEmitter();
 
   loader: boolean = true;
 
@@ -182,6 +185,7 @@ export class UserRecycleBinCategoriesForAdminComponent implements OnInit {
               if (response.status == ResponseResultStatusType.Success) {
 
                 this.getCategories();
+                this.callCategories.emit();
 
                 this.Toast.fire({
                   icon: 'success',
@@ -204,7 +208,6 @@ export class UserRecycleBinCategoriesForAdminComponent implements OnInit {
       }
     });
   }
-
 
   getCategories(): void {
     this.loader = true;
